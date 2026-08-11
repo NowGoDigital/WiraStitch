@@ -482,7 +482,7 @@
             transform: scale(1.08);
         }
 
-        /* ====== PRODUCTS ====== */
+        /* ====== PRODUCTS (4 KOLOM DI DESKTOP) ====== */
         .products {
             padding: 100px 0;
             background: var(--cream);
@@ -517,8 +517,8 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
         .product-card {
@@ -527,6 +527,7 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: var(--shadow);
+            min-width: 0;
         }
 
         .product-card:hover {
@@ -535,7 +536,7 @@
         }
 
         .product-image {
-            height: 280px;
+            height: 210px;
             background: linear-gradient(135deg, var(--cream-dark), var(--cream));
             display: flex;
             align-items: center;
@@ -545,7 +546,7 @@
         }
 
         .product-image .product-emoji {
-            font-size: 5rem;
+            font-size: 4rem;
             transition: var(--transition);
         }
 
@@ -555,22 +556,22 @@
 
         .product-badge {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 12px;
+            left: 12px;
             background: var(--accent);
             color: white;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
         .product-wishlist {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 36px;
-            height: 36px;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
             background: var(--white);
             border-radius: 50%;
             display: flex;
@@ -587,11 +588,11 @@
         }
 
         .product-info {
-            padding: 25px;
+            padding: 18px 16px;
         }
 
         .product-info .product-category {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--accent);
             font-weight: 500;
             text-transform: uppercase;
@@ -599,42 +600,44 @@
         }
 
         .product-info h3 {
-            font-size: 1.2rem;
-            margin: 8px 0;
+            font-size: 1.05rem;
+            margin: 6px 0;
             color: var(--text-dark);
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
 
         .product-info .product-desc {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-light);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }
 
         .product-price {
-            font-size: 1.3rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--primary);
         }
 
         .product-price .old-price {
-            font-size: 0.85rem;
+            display: block;
+            margin-left: 0;
+            font-size: 0.72rem;
             color: var(--text-light);
             text-decoration: line-through;
             font-weight: 400;
-            margin-left: 5px;
         }
 
         .btn-add-cart {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             background: var(--primary);
             color: white;
@@ -644,7 +647,8 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
-            font-size: 1.1rem;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .btn-add-cart:hover {
@@ -736,7 +740,7 @@
             margin-bottom: 25px;
         }
 
-        /* ====== ABOUT / PROCESS ====== */
+        /* ====== ABOUT ====== */
         .about {
             padding: 100px 0;
             background: var(--cream);
@@ -1374,7 +1378,44 @@
             color: var(--text-light);
         }
 
-        /* ====== RESPONSIVE (SUDAH DIPERBAIKI) ====== */
+        /* ====== CONTACT SOCIAL LINKS ====== */
+        .contact-social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-social-link:hover {
+            padding-left: 8px;
+            color: var(--accent);
+        }
+
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .whatsapp-icon { background: #25D366; }
+        .facebook-icon { background: #1877F2; }
+        .instagram-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .tiktok-icon { background: #000000; }
+        .email-icon { background: #EA4335; }
+        .location-icon { background: rgba(255, 255, 255, 0.15); font-size: 1rem; }
+
+        .contact-social-link:hover .contact-icon {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ====== RESPONSIVE (SUDAH DIPERBAIKI TOTAL) ====== */
         @media (max-width: 1024px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -1478,19 +1519,13 @@
                 font-size: 2rem;
             }
 
-            .products-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
             /* === KATEGORI: PAKSA 4 KOLOM 1 BARIS DI HP === */
             .categories {
                 padding: 50px 0;
             }
 
             .categories .container {
-                padding: 0 12px; /* Persempit padding kiri-kanan container */
+                padding: 0 12px;
             }
 
             .categories-grid {
@@ -1499,7 +1534,7 @@
             }
 
             .category-card {
-                padding: 16px 4px 14px; /* Padding kiri-kanan card dipangkas */
+                padding: 16px 4px 14px;
                 border-radius: 14px;
             }
 
@@ -1515,7 +1550,69 @@
             }
 
             .category-card p {
-                display: none; /* Sembunyikan deskripsi di HP agar lega */
+                display: none;
+            }
+
+            /* === PRODUK: 2 KOLOM BERJEJER DI HP === */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                max-width: none;
+                margin: 0;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-image .product-emoji {
+                font-size: 3rem;
+            }
+
+            .product-info {
+                padding: 14px 12px;
+            }
+
+            .product-info .product-category {
+                font-size: 0.62rem;
+                letter-spacing: 0.5px;
+            }
+
+            .product-info h3 {
+                font-size: 0.9rem;
+            }
+
+            .product-info .product-desc {
+                display: none;
+            }
+
+            .product-price {
+                font-size: 0.95rem;
+            }
+
+            .product-price .old-price {
+                display: none;
+            }
+
+            .btn-add-cart {
+                width: 34px;
+                height: 34px;
+                font-size: 0.9rem;
+            }
+
+            .product-badge {
+                top: 8px;
+                left: 8px;
+                padding: 4px 10px;
+                font-size: 0.62rem;
+            }
+
+            .product-wishlist {
+                top: 8px;
+                right: 8px;
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
             }
 
             .process-steps {
@@ -1556,7 +1653,7 @@
                 gap: 20px;
             }
 
-            /* Kategori TETAP 4 kolom bahkan di layar paling sempit */
+            /* Kategori TETAP 4 kolom di layar paling sempit */
             .categories-grid {
                 gap: 6px;
             }
@@ -1574,61 +1671,33 @@
             .category-card h3 {
                 font-size: 0.6rem;
             }
-        }
 
-        /* ====== CONTACT SOCIAL LINKS ====== */
-        .contact-social-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            transition: all 0.3s ease;
-        }
+            /* Produk TETAP 2 kolom, lebih rapat */
+            .products-grid {
+                gap: 10px;
+            }
 
-        .contact-social-link:hover {
-            padding-left: 8px;
-            color: var(--accent);
-        }
+            .product-image {
+                height: 130px;
+            }
 
-        .contact-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
+            .product-info {
+                padding: 12px 10px;
+            }
 
-        .whatsapp-icon {
-            background: #25D366;
-        }
+            .product-info h3 {
+                font-size: 0.8rem;
+            }
 
-        .facebook-icon {
-            background: #1877F2;
-        }
+            .product-price {
+                font-size: 0.85rem;
+            }
 
-        .instagram-icon {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        }
-
-        .tiktok-icon {
-            background: #000000;
-        }
-
-        .email-icon {
-            background: #EA4335;
-        }
-
-        .location-icon {
-            background: rgba(255, 255, 255, 0.15);
-            font-size: 1rem;
-        }
-
-        .contact-social-link:hover .contact-icon {
-            transform: scale(1.15);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            .btn-add-cart {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -1739,7 +1808,7 @@
         </div>
     </section>
 
-    <!-- ====== PRODUK ====== -->
+    <!-- ====== PRODUK UNGGULAN (4 KOLOM DESKTOP / 2 KOLOM HP) ====== -->
     <section class="products" id="produk">
         <div class="container">
             <div class="section-title">
@@ -1767,7 +1836,7 @@
                         <p class="product-desc">Tas rajut benang katun premium, kuat dan elegan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp185.000 <span class="old-price">Rp220.000</span></div>
-                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜"></button>
+                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1782,7 +1851,7 @@
                         <p class="product-desc">Topi beanie rajut hangat untuk segala suasana.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp95.000</div>
-                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢">🛒</button>
+                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢"></button>
                         </div>
                     </div>
                 </div>
@@ -1798,7 +1867,7 @@
                         <p class="product-desc">Syal rajut lembut dengan warna-warna earthy.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp120.000</div>
-                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣">🛒</button>
+                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣"></button>
                         </div>
                     </div>
                 </div>
@@ -1814,7 +1883,7 @@
                         <p class="product-desc">Boneka rajut menggemaskan, cocok untuk hadiah.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp150.000</div>
-                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸">🛒</button>
+                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸"></button>
                         </div>
                     </div>
                 </div>
@@ -1829,7 +1898,7 @@
                         <p class="product-desc">Tote bag rajut warna pastel yang manis dan ringan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp160.000</div>
-                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝"></button>
+                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1845,6 +1914,37 @@
                         <div class="product-footer">
                             <div class="product-price">Rp135.000 <span class="old-price">Rp155.000</span></div>
                             <button class="btn-add-cart" data-name="Scarf Chunky Knit" data-price="135000" data-emoji="🎀">🛒</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category="topi">
+                    <div class="product-image">
+                        <span class="product-emoji">👒</span>
+                        <span class="product-badge">New</span>
+                        <div class="product-wishlist">♡</div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Topi & Beanie</span>
+                        <h3>Bucket Hat Rajut</h3>
+                        <p class="product-desc">Bucket hat rajut santai untuk tampilan casual.</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp110.000</div>
+                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒">🛒</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category="boneka">
+                    <div class="product-image">
+                        <span class="product-emoji">🐰</span>
+                        <div class="product-wishlist">♡</div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Boneka Amigurumi</span>
+                        <h3>Boneka Bunny Amigurumi</h3>
+                        <p class="product-desc">Kelinci rajut imut dengan telinga panjang yang lembut.</p>
+                        <div class="product-footer">
+                            <div class="product-price">Rp165.000</div>
+                            <button class="btn-add-cart" data-name="Boneka Bunny Amigurumi" data-price="165000" data-emoji="🐰"></button>
                         </div>
                     </div>
                 </div>
@@ -1974,7 +2074,8 @@
             </div>
         </div>
     </section>
-        <!-- ====== CTA ====== -->
+
+    <!-- ====== CTA ====== -->
     <section class="cta">
         <div class="container">
             <h2>Siap Memiliki Rajutan Impianmu?</h2>
@@ -2219,7 +2320,6 @@
 
         // Tombol tambah ke keranjang di kartu produk
         document.querySelectorAll('.btn-add-cart').forEach(btn => {
-            if (!btn.textContent.trim()) btn.textContent = '🛒';
             btn.addEventListener('click', () =>
                 addToCart(btn.dataset.name, parseInt(btn.dataset.price), btn.dataset.emoji)
             );
