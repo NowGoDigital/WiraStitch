@@ -420,6 +420,12 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
+
+        /* Animasi baru: hero image oval "mengambang & bernapas" (dipakai di tampilan HP) */
+        @keyframes heroBreath {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.04); }
+        }
                 /* ====== CATEGORIES (MINIMALIS & CANTIK) ====== */
         .categories {
             padding: 80px 0;
@@ -1415,7 +1421,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* ====== RESPONSIVE (SUDAH DIPERBAIKI TOTAL) ====== */
+        /* ====== RESPONSIVE ====== */
         @media (max-width: 1024px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -1498,13 +1504,59 @@
                 z-index: 1002;
             }
 
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            /* === HERO HP: tombol 2 kolom, stats 3 kolom, gambar oval beranimasi === */
+            .hero {
+                padding-top: 90px;
+                padding-bottom: 50px;
+            }
+
             .hero-content h1 {
                 font-size: 2.5rem;
             }
 
+            /* Tombol berjejer 2 kolom penuh */
+            .hero-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                padding: 13px 8px;
+                font-size: 0.85rem;
+            }
+
+            /* Stats berjejer 3 kolom */
+            .hero-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                margin-top: 35px;
+            }
+
+            .stat-item h3 {
+                font-size: 1.3rem;
+            }
+
+            .stat-item p {
+                font-size: 0.7rem;
+            }
+
+            /* Hero image OVAL + animasi mengambang & bernapas */
+            .hero-image {
+                margin-top: 35px;
+            }
+
             .hero-image-main {
-                width: 280px;
-                height: 280px;
+                width: min(85vw, 320px);
+                height: min(58vw, 225px); /* lebar > tinggi = oval/lonjong */
+                border-width: 5px;
+                animation: heroBreath 4s ease-in-out infinite;
             }
 
             .hero-image-main .hero-emoji {
@@ -1515,11 +1567,7 @@
                 display: none;
             }
 
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            /* === KATEGORI: PAKSA 4 KOLOM 1 BARIS DI HP === */
+            /* === KATEGORI: TETAP 4 KOLOM 1 BARIS DI HP === */
             .categories {
                 padding: 50px 0;
             }
@@ -1553,7 +1601,7 @@
                 display: none;
             }
 
-            /* === PRODUK: 2 KOLOM BERJEJER DI HP === */
+            /* === PRODUK: TETAP 2 KOLOM BERJEJER DI HP === */
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -1643,14 +1691,31 @@
                 font-size: 2rem;
             }
 
+            /* Oval lebih kecil di layar sempit, animasi tetap jalan */
             .hero-image-main {
-                width: 240px;
-                height: 240px;
+                width: min(88vw, 280px);
+                height: min(62vw, 200px);
+            }
+
+            .hero-image-main .hero-emoji {
+                font-size: 4rem;
             }
 
             .hero-stats {
-                flex-direction: column;
-                gap: 20px;
+                gap: 6px;
+            }
+
+            .stat-item h3 {
+                font-size: 1.1rem;
+            }
+
+            .stat-item p {
+                font-size: 0.62rem;
+            }
+
+            .hero-buttons .btn {
+                font-size: 0.78rem;
+                padding: 12px 6px;
             }
 
             /* Kategori TETAP 4 kolom di layar paling sempit */
@@ -1836,7 +1901,7 @@
                         <p class="product-desc">Tas rajut benang katun premium, kuat dan elegan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp185.000 <span class="old-price">Rp220.000</span></div>
-                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜">🛒</button>
+                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜"></button>
                         </div>
                     </div>
                 </div>
@@ -1851,7 +1916,7 @@
                         <p class="product-desc">Topi beanie rajut hangat untuk segala suasana.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp95.000</div>
-                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢"></button>
+                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1929,7 +1994,7 @@
                         <p class="product-desc">Bucket hat rajut santai untuk tampilan casual.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp110.000</div>
-                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒">🛒</button>
+                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒"></button>
                         </div>
                     </div>
                 </div>
@@ -1984,7 +2049,7 @@
                     <h2>Dibuat dengan Cinta, Dirajut dengan Telaten</h2>
                     <p>WiraStitch lahir dari kecintaan kami pada seni merajut sejak 2020. Setiap produk dikerjakan secara handmade oleh pengrajin lokal berpengalaman, bukan produksi massal.</p>
                     <p>Kami hanya menggunakan benang katun dan wol premium yang telah melalui proses kurasi, sehingga setiap produk awet, lembut, dan nyaman digunakan bertahun-tahun.</p>
-                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮🇩</p>
+                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮</p>
                 </div>
                 <div class="about-image">
                     <div class="about-img-card">🧶</div>
