@@ -421,10 +421,17 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Animasi baru: hero image oval "mengambang & bernapas" (dipakai di tampilan HP) */
+        /* Animasi: hero image "mengambang & bernapas" (dipakai di tampilan HP) */
         @keyframes heroBreath {
             0%, 100% { transform: translateY(0) scale(1); }
             50% { transform: translateY(-12px) scale(1.04); }
+        }
+
+        /* Animasi morph: bentuk oval berubah-ubah halus, TIDAK BERATURAN (dipakai di tampilan HP) */
+        @keyframes blobMorph {
+            0%, 100% { border-radius: 58% 42% 55% 45% / 52% 46% 54% 48%; }
+            33%      { border-radius: 46% 54% 44% 56% / 56% 48% 52% 44%; }
+            66%      { border-radius: 54% 46% 50% 50% / 46% 58% 42% 54%; }
         }
                 /* ====== CATEGORIES (MINIMALIS & CANTIK) ====== */
         .categories {
@@ -1508,10 +1515,10 @@
                 font-size: 2rem;
             }
 
-            /* === HERO HP: tombol 2 kolom, stats 3 kolom, gambar oval beranimasi === */
+            /* === HERO HP: padding atas-bawah DIPERSEMPIT === */
             .hero {
-                padding-top: 90px;
-                padding-bottom: 50px;
+                padding-top: 70px;
+                padding-bottom: 20px;
             }
 
             .hero-content h1 {
@@ -1547,16 +1554,20 @@
                 font-size: 0.7rem;
             }
 
-            /* Hero image OVAL + animasi mengambang & bernapas */
+            /* === HERO IMAGE: OVAL ORGANIK TIDAK SIMETRIS + MORPH === */
             .hero-image {
-                margin-top: 35px;
+                margin-top: 30px;
             }
 
             .hero-image-main {
                 width: min(85vw, 320px);
                 height: min(58vw, 225px); /* lebar > tinggi = oval/lonjong */
                 border-width: 5px;
-                animation: heroBreath 4s ease-in-out infinite;
+                /* OVAL TIDAK SIMETRIS: tiap sudut beda kelengkungan (organik) */
+                border-radius: 58% 42% 55% 45% / 52% 46% 54% 48%;
+                /* Mengambang + bentuknya berubah-ubah halus seperti makhluk hidup */
+                animation: heroBreath 4s ease-in-out infinite,
+                           blobMorph 8s ease-in-out infinite;
             }
 
             .hero-image-main .hero-emoji {
@@ -1691,7 +1702,7 @@
                 font-size: 2rem;
             }
 
-            /* Oval lebih kecil di layar sempit, animasi tetap jalan */
+            /* Oval organik lebih kecil di layar sempit, animasi tetap jalan */
             .hero-image-main {
                 width: min(88vw, 280px);
                 height: min(62vw, 200px);
@@ -1840,7 +1851,7 @@
         </div>
     </section>
 
-    <!-- ====== KATEGORI PRODUK (MINIMALIS & 4 KOLOM DI HP) ====== -->
+    <!-- ====== KATEGORI PRODUK ====== -->
     <section class="categories" id="kategori">
         <div class="container">
             <div class="section-title">
@@ -1873,7 +1884,7 @@
         </div>
     </section>
 
-    <!-- ====== PRODUK UNGGULAN (4 KOLOM DESKTOP / 2 KOLOM HP) ====== -->
+    <!-- ====== PRODUK UNGGULAN ====== -->
     <section class="products" id="produk">
         <div class="container">
             <div class="section-title">
@@ -1901,7 +1912,7 @@
                         <p class="product-desc">Tas rajut benang katun premium, kuat dan elegan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp185.000 <span class="old-price">Rp220.000</span></div>
-                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜"></button>
+                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1932,7 +1943,7 @@
                         <p class="product-desc">Syal rajut lembut dengan warna-warna earthy.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp120.000</div>
-                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣"></button>
+                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1948,7 +1959,7 @@
                         <p class="product-desc">Boneka rajut menggemaskan, cocok untuk hadiah.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp150.000</div>
-                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸"></button>
+                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -1994,7 +2005,7 @@
                         <p class="product-desc">Bucket hat rajut santai untuk tampilan casual.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp110.000</div>
-                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒"></button>
+                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -2009,7 +2020,7 @@
                         <p class="product-desc">Kelinci rajut imut dengan telinga panjang yang lembut.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp165.000</div>
-                            <button class="btn-add-cart" data-name="Boneka Bunny Amigurumi" data-price="165000" data-emoji="🐰"></button>
+                            <button class="btn-add-cart" data-name="Boneka Bunny Amigurumi" data-price="165000" data-emoji="🐰">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -2049,7 +2060,7 @@
                     <h2>Dibuat dengan Cinta, Dirajut dengan Telaten</h2>
                     <p>WiraStitch lahir dari kecintaan kami pada seni merajut sejak 2020. Setiap produk dikerjakan secara handmade oleh pengrajin lokal berpengalaman, bukan produksi massal.</p>
                     <p>Kami hanya menggunakan benang katun dan wol premium yang telah melalui proses kurasi, sehingga setiap produk awet, lembut, dan nyaman digunakan bertahun-tahun.</p>
-                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮</p>
+                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮🇩</p>
                 </div>
                 <div class="about-image">
                     <div class="about-img-card">🧶</div>
