@@ -509,39 +509,39 @@
         }
     }
 
-    /* MOBILE: 4 Kolom dalam 1 Baris sesuai permintaan */
+        /* MOBILE: 4 Kolom dalam 1 Baris */
     @media (max-width: 768px) {
         .categories {
-            padding: 60px 0;
+            padding: 40px 0; /* Kurangi padding atas-bawah section */
         }
 
         .categories-grid {
-            /* Memaksa 4 kolom bahkan di layar kecil */
             grid-template-columns: repeat(4, 1fr); 
-            gap: 10px;
+            gap: 8px; /* Jarak antar card diperkecil */
+            padding: 0 5px; /* Padding kiri-kanan container juga diperkecil */
         }
 
         .category-card {
-            padding: 15px 5px;
-            border-radius: 12px;
+            padding: 12px 4px; /* INI KUNCINYA: Padding kiri-kanan hanya 4px */
+            border-radius: 10px;
         }
 
         .category-card .cat-icon {
-            font-size: 1.8rem; /* Perkecil emoji agar muat */
-            margin-bottom: 8px;
+            font-size: 1.6rem; /* Icon lebih kecil */
+            margin-bottom: 6px;
         }
 
         .category-card h3 {
-            font-size: 0.7rem; /* Perkecil font judul */
-            margin-bottom: 2px;
+            font-size: 0.65rem; /* Font judul sangat kecil */
+            line-height: 1.2;
+            white-space: nowrap; /* Mencegah teks turun baris */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .category-card p {
-            font-size: 0.6rem; /* Perkecil font deskripsi */
-            display: none; /* Opsional: Sembunyikan deskripsi di mobile agar lebih rapi jika terlalu sempit */
+            display: none; /* Sembunyikan deskripsi agar lebih lega */
         }
-        
-        /* Jika ingin deskripsi tetap muncul tapi sangat kecil, hapus 'display: none' di atas */
     }
 
         /* ====== PRODUCTS ====== */
