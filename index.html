@@ -379,6 +379,15 @@
             font-size: 8rem;
         }
 
+        /* SVG blob organik: tersembunyi di desktop, muncul di HP */
+        .hero-blob {
+            display: none;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
         .floating-card {
             position: absolute;
             background: var(--white);
@@ -421,17 +430,10 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Animasi: hero image "mengambang & bernapas" (dipakai di tampilan HP) */
-        @keyframes heroBreath {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-12px) scale(1.04); }
-        }
-
-        /* Animasi morph: bentuk oval berubah-ubah halus, TIDAK BERATURAN (dipakai di tampilan HP) */
-        @keyframes blobMorph {
-            0%, 100% { border-radius: 58% 42% 55% 45% / 52% 46% 54% 48%; }
-            33%      { border-radius: 46% 54% 44% 56% / 56% 48% 52% 44%; }
-            66%      { border-radius: 54% 46% 50% 50% / 46% 58% 42% 54%; }
+        /* Animasi blob di HP: mengambang + goyang halus */
+        @keyframes blobFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
         }
                 /* ====== CATEGORIES (MINIMALIS & CANTIK) ====== */
         .categories {
@@ -1554,24 +1556,35 @@
                 font-size: 0.7rem;
             }
 
-            /* === HERO IMAGE: OVAL ORGANIK TIDAK SIMETRIS + MORPH === */
+            /* === HERO IMAGE: BLOB ORGANIK SESUAI SKETSA (SVG) === */
             .hero-image {
                 margin-top: 30px;
+                width: min(92vw, 340px);
+                height: min(67vw, 248px);
+                margin-left: auto;
+                margin-right: auto;
             }
 
+            /* Kotak lingkaran lama dibuat transparan, blob SVG yang tampil */
             .hero-image-main {
-                width: min(85vw, 320px);
-                height: min(58vw, 225px); /* lebar > tinggi = oval/lonjong */
-                border-width: 5px;
-                /* OVAL TIDAK SIMETRIS: tiap sudut beda kelengkungan (organik) */
-                border-radius: 58% 42% 55% 45% / 52% 46% 54% 48%;
-                /* Mengambang + bentuknya berubah-ubah halus seperti makhluk hidup */
-                animation: heroBreath 4s ease-in-out infinite,
-                           blobMorph 8s ease-in-out infinite;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                overflow: visible;
+                animation: blobFloat 5s ease-in-out infinite;
+            }
+
+            .hero-blob {
+                display: block;
+                filter: drop-shadow(0 15px 30px rgba(139, 94, 60, 0.25));
             }
 
             .hero-image-main .hero-emoji {
-                font-size: 5rem;
+                position: relative;
+                z-index: 2;
+                font-size: 4.5rem;
             }
 
             .floating-card {
@@ -1702,10 +1715,10 @@
                 font-size: 2rem;
             }
 
-            /* Oval organik lebih kecil di layar sempit, animasi tetap jalan */
-            .hero-image-main {
-                width: min(88vw, 280px);
-                height: min(62vw, 200px);
+            /* Blob lebih kecil di layar sempit, animasi tetap jalan */
+            .hero-image {
+                width: min(94vw, 300px);
+                height: min(70vw, 220px);
             }
 
             .hero-image-main .hero-emoji {
@@ -1835,6 +1848,29 @@
             </div>
             <div class="hero-image">
                 <div class="hero-image-main">
+                    <!-- BLOB ORGANIK (SVG) - hanya tampil di HP, bentuk sesuai sketsa -->
+                    <svg class="hero-blob" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#D4A574"/>
+                                <stop offset="100%" stop-color="#C49A6C"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#blobGrad)" stroke="#FFFFFF" stroke-width="6" d="
+                            M 28 152
+                            C 34 118, 82 102, 142 92
+                            C 196 83, 228 74, 260 58
+                            C 296 40, 348 38, 368 76
+                            C 384 106, 362 128, 340 148
+                            C 326 161, 326 176, 338 190
+                            C 356 210, 360 238, 336 256
+                            C 310 276, 276 280, 248 272
+                            C 224 265, 208 284, 182 280
+                            C 150 275, 140 246, 120 228
+                            C 102 212, 74 206, 54 190
+                            C 36 176, 22 172, 28 152
+                            Z"/>
+                    </svg>
                     <span class="hero-emoji">🧶</span>
                 </div>
                 <div class="floating-card">
@@ -1912,7 +1948,7 @@
                         <p class="product-desc">Tas rajut benang katun premium, kuat dan elegan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp185.000 <span class="old-price">Rp220.000</span></div>
-                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜">🛒</button>
+                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜"></button>
                         </div>
                     </div>
                 </div>
@@ -1927,7 +1963,7 @@
                         <p class="product-desc">Topi beanie rajut hangat untuk segala suasana.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp95.000</div>
-                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢">🛒</button>
+                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢"></button>
                         </div>
                     </div>
                 </div>
@@ -1943,7 +1979,7 @@
                         <p class="product-desc">Syal rajut lembut dengan warna-warna earthy.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp120.000</div>
-                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣">🛒</button>
+                            <button class="btn-add-cart" data-name="Syal Winter Warm" data-price="120000" data-emoji="🧣"></button>
                         </div>
                     </div>
                 </div>
@@ -1959,7 +1995,7 @@
                         <p class="product-desc">Boneka rajut menggemaskan, cocok untuk hadiah.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp150.000</div>
-                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸">🛒</button>
+                            <button class="btn-add-cart" data-name="Boneka Bear Amigurumi" data-price="150000" data-emoji="🧸"></button>
                         </div>
                     </div>
                 </div>
