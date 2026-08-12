@@ -1132,28 +1132,45 @@
             padding-left: 5px;
         }
 
-        /* ====== FOOTER MAP (GOOGLE MAPS BERKELAS) ====== */
-        .footer-map h4 {
-            color: var(--white);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-        }
-
+               /* ====== FOOTER MAP (HEADER BAR MENYATU DENGAN PETA) ====== */
         .map-frame {
             position: relative;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
-            height: 250px;
+            height: 300px;
             background: var(--cream-dark);
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header bar menempel di atas peta (seperti contoh) */
+        .map-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .map-header-icon {
+            font-size: 1.1rem;
+        }
+
+        .map-header-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
         }
 
         .map-frame iframe {
             width: 100%;
-            height: 100%;
+            flex: 1;
             border: 0;
             display: block;
             filter: saturate(0.9);
@@ -2280,8 +2297,11 @@
                     </div>
                 </div>
                 <div class="footer-map">
-                    <h4>📍 Lokasi Kami</h4>
                     <div class="map-frame">
+                        <div class="map-header">
+                            <span class="map-header-icon">📍</span>
+                            <span class="map-header-title">Lokasi Kami</span>
+                        </div>
                         <!-- ⚠️ GANTI nilai src di bawah dengan kode embed Google Maps lokasi kamu -->
                         <iframe
                             src="https://maps.google.com/maps?q=Bandung%20Indonesia&t=&z=13&ie=UTF8&iwloc=&output=embed"
