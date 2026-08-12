@@ -1517,10 +1517,15 @@
                 font-size: 2rem;
             }
 
-            /* === HERO HP: padding atas-bawah DIPERSEMPIT === */
+            /* === HERO HP: padding atas-bawah SEMPIT === */
             .hero {
-                padding-top: 70px;
-                padding-bottom: 20px;
+                padding-top: 65px;
+                padding-bottom: 10px;
+            }
+
+            /* Padding kiri-kanan SEMPIT supaya blob bisa MAKSIMAL lebar */
+            .hero-container {
+                padding: 0 10px;
             }
 
             .hero-content h1 {
@@ -1545,7 +1550,7 @@
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
-                margin-top: 35px;
+                margin-top: 30px;
             }
 
             .stat-item h3 {
@@ -1556,16 +1561,16 @@
                 font-size: 0.7rem;
             }
 
-            /* === HERO IMAGE: BLOB ORGANIK SESUAI SKETSA (SVG) === */
+            /* === HERO IMAGE: BLOB MAKSIMAL SELEBAR & SETINGGI SPACE === */
             .hero-image {
-                margin-top: 30px;
-                width: min(92vw, 340px);
-                height: min(67vw, 248px);
+                margin-top: 15px;              /* jarak atas sempit */
+                width: 100%;                    /* selebar space yang tersedia */
+                height: min(78vw, 300px);       /* tinggi diperbesar */
                 margin-left: auto;
                 margin-right: auto;
             }
 
-            /* Kotak lingkaran lama dibuat transparan, blob SVG yang tampil */
+            /* Kotak lingkaran lama transparan, blob SVG yang tampil */
             .hero-image-main {
                 width: 100%;
                 height: 100%;
@@ -1584,7 +1589,7 @@
             .hero-image-main .hero-emoji {
                 position: relative;
                 z-index: 2;
-                font-size: 4.5rem;
+                font-size: 5.5rem;
             }
 
             .floating-card {
@@ -1715,14 +1720,14 @@
                 font-size: 2rem;
             }
 
-            /* Blob lebih kecil di layar sempit, animasi tetap jalan */
+            /* Blob tetap MAKSIMAL di layar sempit */
             .hero-image {
-                width: min(94vw, 300px);
-                height: min(70vw, 220px);
+                width: 100%;
+                height: min(80vw, 270px);
             }
 
             .hero-image-main .hero-emoji {
-                font-size: 4rem;
+                font-size: 5rem;
             }
 
             .hero-stats {
@@ -1948,7 +1953,7 @@
                         <p class="product-desc">Tas rajut benang katun premium, kuat dan elegan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp185.000 <span class="old-price">Rp220.000</span></div>
-                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜"></button>
+                            <button class="btn-add-cart" data-name="Tas Rajut Premium" data-price="185000" data-emoji="👜">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -2010,7 +2015,7 @@
                         <p class="product-desc">Tote bag rajut warna pastel yang manis dan ringan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp160.000</div>
-                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝">🛒</button>
+                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝"></button>
                         </div>
                     </div>
                 </div>
@@ -2041,7 +2046,7 @@
                         <p class="product-desc">Bucket hat rajut santai untuk tampilan casual.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp110.000</div>
-                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒">🛒</button>
+                            <button class="btn-add-cart" data-name="Bucket Hat Rajut" data-price="110000" data-emoji="👒"></button>
                         </div>
                     </div>
                 </div>
@@ -2056,7 +2061,7 @@
                         <p class="product-desc">Kelinci rajut imut dengan telinga panjang yang lembut.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp165.000</div>
-                            <button class="btn-add-cart" data-name="Boneka Bunny Amigurumi" data-price="165000" data-emoji="🐰">🛒</button>
+                            <button class="btn-add-cart" data-name="Boneka Bunny Amigurumi" data-price="165000" data-emoji="🐰"></button>
                         </div>
                     </div>
                 </div>
