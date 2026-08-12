@@ -1060,11 +1060,13 @@
             padding: 80px 0 30px;
         }
 
+        /* Footer kini 2 kolom: Brand + Peta Lokasi */
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 40px;
             margin-bottom: 50px;
+            align-items: start;
         }
 
         .footer-brand h3 {
@@ -1128,6 +1130,39 @@
         .footer-links a:hover {
             color: var(--accent);
             padding-left: 5px;
+        }
+
+        /* ====== FOOTER MAP (GOOGLE MAPS BERKELAS) ====== */
+        .footer-map h4 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .map-frame {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+            height: 250px;
+            background: var(--cream-dark);
+            transition: var(--transition);
+        }
+
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            filter: saturate(0.9);
+        }
+
+        .map-frame:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38);
+            border-color: var(--accent);
         }
 
         .footer-bottom {
@@ -1393,43 +1428,6 @@
             color: var(--text-light);
         }
 
-        /* ====== CONTACT SOCIAL LINKS ====== */
-        .contact-social-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            transition: all 0.3s ease;
-        }
-
-        .contact-social-link:hover {
-            padding-left: 8px;
-            color: var(--accent);
-        }
-
-        .contact-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .whatsapp-icon { background: #25D366; }
-        .facebook-icon { background: #1877F2; }
-        .instagram-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .tiktok-icon { background: #000000; }
-        .email-icon { background: #EA4335; }
-        .location-icon { background: rgba(255, 255, 255, 0.15); font-size: 1rem; }
-
-        .contact-social-link:hover .contact-icon {
-            transform: scale(1.15);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
         /* ====== RESPONSIVE ====== */
         @media (max-width: 1024px) {
             .hero-container {
@@ -1483,8 +1481,10 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Footer 2 kolom tetap rapi di tablet */
             .footer-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 2fr 1fr;
+                gap: 30px;
             }
         }
 
@@ -1517,16 +1517,16 @@
                 font-size: 2rem;
             }
 
-            /* === HERO HP: padding atas-bawah SEMPIT === */
+            /* === HERO HP: badge tidak mepet navbar === */
             .hero {
                 padding-top: 90px;
                 padding-bottom: 10px;
             }
 
-            /* Padding kiri-kanan SEMPIT supaya blob bisa MAKSIMAL lebar */
+            /* Padding kiri-kanan SEMPIT + jarak stats-blob rapat */
             .hero-container {
                 padding: 0 10px;
-                gap: 5px; /* jarak stats ↔ blob dipersempit (desktop tetap 60px) */
+                gap: 10px;
             }
 
             .hero-content h1 {
@@ -1564,9 +1564,9 @@
 
             /* === HERO IMAGE: BLOB MAKSIMAL SELEBAR & SETINGGI SPACE === */
             .hero-image {
-                margin-top: 0px;              /* jarak atas sempit */
-                width: 100%;                    /* selebar space yang tersedia */
-                height: min(78vw, 300px);       /* tinggi diperbesar */
+                margin-top: 0;
+                width: 100%;
+                height: min(78vw, 300px);
                 margin-left: auto;
                 margin-right: auto;
             }
@@ -1606,7 +1606,7 @@
             .testimonials,
             .cta,
             .newsletter {
-                padding: 40px 0;   /* desktop 80-100px → HP hanya 40px */
+                padding: 40px 0;
             }
 
             .footer {
@@ -1634,6 +1634,11 @@
 
             .newsletter-box {
                 padding: 35px 20px;
+            }
+
+            /* === KATEGORI: TETAP 4 KOLOM 1 BARIS DI HP === */
+            .categories {
+                padding: 40px 0;
             }
 
             .categories .container {
@@ -1731,8 +1736,14 @@
                 grid-template-columns: 1fr;
             }
 
+            /* Footer jadi 1 kolom di HP, peta tetap cantik */
             .footer-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .map-frame {
+                height: 220px;
             }
 
             .newsletter-form {
@@ -1826,6 +1837,10 @@
                 width: 30px;
                 height: 30px;
                 font-size: 0.8rem;
+            }
+
+            .map-frame {
+                height: 200px;
             }
         }
     </style>
@@ -2050,7 +2065,7 @@
                         <p class="product-desc">Tote bag rajut warna pastel yang manis dan ringan.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp160.000</div>
-                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝"></button>
+                            <button class="btn-add-cart" data-name="Tote Bag Pastel" data-price="160000" data-emoji="👝">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -2065,7 +2080,7 @@
                         <p class="product-desc">Scarf rajut tebal dengan tekstur chunky yang cozy.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp135.000 <span class="old-price">Rp155.000</span></div>
-                            <button class="btn-add-cart" data-name="Scarf Chunky Knit" data-price="135000" data-emoji="🎀">🛒</button>
+                            <button class="btn-add-cart" data-name="Scarf Chunky Knit" data-price="135000" data-emoji="🎀"></button>
                         </div>
                     </div>
                 </div>
@@ -2136,7 +2151,7 @@
                     <h2>Dibuat dengan Cinta, Dirajut dengan Telaten</h2>
                     <p>WiraStitch lahir dari kecintaan kami pada seni merajut sejak 2020. Setiap produk dikerjakan secara handmade oleh pengrajin lokal berpengalaman, bukan produksi massal.</p>
                     <p>Kami hanya menggunakan benang katun dan wol premium yang telah melalui proses kurasi, sehingga setiap produk awet, lembut, dan nyaman digunakan bertahun-tahun.</p>
-                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮🇩</p>
+                    <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. 🇮</p>
                 </div>
                 <div class="about-image">
                     <div class="about-img-card">🧶</div>
@@ -2250,7 +2265,7 @@
         </div>
     </section>
 
-    <!-- ====== FOOTER ====== -->
+    <!-- ====== FOOTER (BRAND + GOOGLE MAPS) ====== -->
     <footer class="footer" id="kontak">
         <div class="container">
             <div class="footer-grid">
@@ -2264,28 +2279,23 @@
                         <a href="#" title="WhatsApp">💬</a>
                     </div>
                 </div>
-                <div class="footer-links">
-                    <h4>Menu</h4>
-                    <ul>
-                        <li><a href="#home">Beranda</a></li>
-                        <li><a href="#kategori">Kategori</a></li>
-                        <li><a href="#produk">Produk</a></li>
-                        <li><a href="#tentang">Tentang</a></li>
-                        <li><a href="#testimoni">Testimoni</a></li>
-                    </ul>
+                <div class="footer-map">
+                    <h4>📍 Lokasi Kami</h4>
+                    <div class="map-frame">
+                        <!-- ⚠️ GANTI nilai src di bawah dengan kode embed Google Maps lokasi kamu -->
+                        <iframe
+                            src="https://maps.google.com/maps?q=Bandung%20Indonesia&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen
+                            title="Lokasi WiraStitch - Bandung">
+                        </iframe>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <h4>Kategori</h4>
-                    <ul>
-                        <li><a href="#kategori">Tas Rajut</a></li>
-                        <li><a href="#kategori">Topi & Beanie</a></li>
-                        <li><a href="#kategori">Syal & Scarf</a></li>
-                        <li><a href="#kategori">Boneka Amigurumi</a></li>
-                    </ul>
-                </div>
-              </div>
+            </div>
             <div class="footer-bottom">
                 <p>© 2026 WiraStitch. Seluruh hak cipta dilindungi.</p>
+                <div class="footer-payments">💳 🏧 📱</div>
             </div>
         </div>
     </footer>
