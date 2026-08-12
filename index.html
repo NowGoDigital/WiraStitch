@@ -1597,9 +1597,43 @@
                 display: none;
             }
 
-            /* === KATEGORI: TETAP 4 KOLOM 1 BARIS DI HP === */
-            .categories {
-                padding: 50px 0;
+            /* === SEMUA SECTION: PADDING ATAS-BAWAH MINIMALIS DI HP === */
+            .categories,
+            .products,
+            .featured,
+            .about,
+            .process,
+            .testimonials,
+            .cta,
+            .newsletter {
+                padding: 40px 0;   /* desktop 80-100px → HP hanya 40px */
+            }
+
+            .footer {
+                padding: 50px 0 25px;
+            }
+
+            /* Jarak judul section ke isi dipersempit */
+            .section-title {
+                margin-bottom: 25px;
+            }
+
+            /* Jarak antar elemen di dalam section ikut rapat */
+            .featured-grid,
+            .about-grid {
+                gap: 25px;
+            }
+
+            .process-steps {
+                gap: 20px;
+            }
+
+            .testimonials-grid {
+                gap: 15px;
+            }
+
+            .newsletter-box {
+                padding: 35px 20px;
             }
 
             .categories .container {
