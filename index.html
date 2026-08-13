@@ -1484,6 +1484,7 @@
             justify-content: center;
             font-size: 2rem;
             flex-shrink: 0;
+            overflow: hidden;
         }
 
         .cart-item-info {
@@ -2177,7 +2178,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                                <div class="hero-image-main">
+                <div class="hero-image-main">
                     <!-- BLOB ORGANIK (SVG) - hanya tampil di HP, kini diisi foto hero-image.jpg -->
                     <svg class="hero-blob" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
                         <defs>
@@ -2308,7 +2309,7 @@
                         <p class="product-desc">Topi beanie rajut hangat untuk segala suasana.</p>
                         <div class="product-footer">
                             <div class="product-price">Rp95.000</div>
-                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢">🛒</button>
+                            <button class="btn-add-cart" data-name="Beanie Classic" data-price="95000" data-emoji="🧢"></button>
                         </div>
                     </div>
                 </div>
@@ -2716,6 +2717,139 @@
     </div>
 
     <script>
+        // ====== SINKRONISASI DATA ADMIN (localStorage) ======
+        const LS_KEYS = {
+            products: 'wirastitch_products',
+            featured: 'wirastitch_featured',
+            settings: 'wirastitch_settings'
+        };
+
+        const CATEGORY_LABELS = {
+            tas: 'Tas Rajut',
+            topi: 'Topi & Beanie',
+            syal: 'Syal & Scarf',
+            boneka: 'Boneka Amigurumi',
+            aksesoris: 'Aksesoris'
+        };
+
+        const FILTER_LABELS = {
+            tas: 'Tas', topi: 'Topi', syal: 'Syal', boneka: 'Boneka', aksesoris: 'Aksesoris'
+        };
+
+        function lsGet(key) {
+            try {
+                const d = localStorage.getItem(key);
+                return d ? JSON.parse(d) : null;
+            } catch (e) { return null; }
+        }
+
+        // Default = isi tampilan saat ini, jadi tanpa admin pun tampilan tetap sama
+        window.SYNC_FEATURED = {
+            label: 'Best Seller Bulan Ini',
+            name: 'Boneka Bear Amigurumi Edisi Spesial',
+            description: 'Boneka rajut berukuran 30 cm dengan bahan anti-alergi dan isian dakron premium super lembut. Cocok sebagai kado ulang tahun, wisuda, maupun hiasan kamar.',
+            price: 150000,
+            emoji: '🧸',
+            image: '',
+            features: [
+                'Benang katun anti-alergi, aman untuk anak',
+                'Isian dakron premium super lembut',
+                'Bisa custom nama & warna',
+                'Gratis kartu ucapan tulisan tangan'
+            ],
+            buttonText: 'Tambah ke Keranjang',
+            buttonLink: '',
+            visible: true
+        };
+        window.SYNC_WA = '';
+
+        function applySync() {
+            /* --- 1. PRODUK (dari tab Daftar Produk admin) --- */
+            const stored = lsGet(LS_KEYS.products);
+            if (Array.isArray(stored) && stored.length > 0) {
+                document.getElementById('productsGrid').innerHTML = stored.map(p => `
+                    <div class="product-card" data-category="${p.category}">
+                        <div class="product-image">
+                            ${p.image
+                                ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">`
+                                : `<span class="product-emoji">${p.emoji || '📦'}</span>`}
+                            ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                            <div class="product-wishlist">♡</div>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">${CATEGORY_LABELS[p.category] || p.category}</span>
+                            <h3>${p.name}</h3>
+                            <p class="product-desc">${p.description || ''}</p>
+                            <div class="product-footer">
+                                <div class="product-price">Rp${(p.price || 0).toLocaleString('id-ID')}${p.oldPrice ? ` <span class="old-price">Rp${p.oldPrice.toLocaleString('id-ID')}</span>` : ''}</div>
+                                <button class="btn-add-cart" data-name="${p.name}" data-price="${p.price}" data-emoji="${p.image || p.emoji || '📦'}">🛒</button>
+                            </div>
+                        </div>
+                    </div>`).join('');
+
+                // Tombol filter mengikuti kategori yang ada
+                const cats = [...new Set(stored.map(p => p.category))];
+                document.querySelector('.products-filter').innerHTML =
+                    `<button class="filter-btn active" data-filter="all">Semua</button>` +
+                    cats.map(c => `<button class="filter-btn" data-filter="${c}">${FILTER_LABELS[c] || c}</button>`).join('');
+            }
+
+            /* --- 2. PRODUK UNGGULAN / BEST SELLER (dari tab Produk Unggulan admin) --- */
+            const f = Object.assign({}, window.SYNC_FEATURED, lsGet(LS_KEYS.featured) || {});
+            window.SYNC_FEATURED = f;
+            const featSection = document.querySelector('.featured');
+            if (featSection) {
+                if (f.visible === false) {
+                    featSection.style.display = 'none';
+                } else {
+                    featSection.style.display = '';
+                    featSection.querySelector('.featured-content h3').textContent = f.label;
+                    featSection.querySelector('.featured-content h2').textContent = f.name;
+                    featSection.querySelector('.featured-content p').textContent = f.description;
+                    featSection.querySelector('.featured-price').textContent = 'Rp' + (f.price || 0).toLocaleString('id-ID');
+                    if (f.buttonText) document.getElementById('featuredAddCart').textContent = f.buttonText;
+                    if (Array.isArray(f.features) && f.features.length) {
+                        featSection.querySelector('.featured-features').innerHTML =
+                            f.features.map(x => `<li>${x}</li>`).join('');
+                    }
+                    const imgBox = featSection.querySelector('.featured-image');
+                    if (f.image) {
+                        imgBox.innerHTML = `<img src="${f.image}" alt="${f.name}" style="width:100%;height:100%;object-fit:cover;">`;
+                    } else {
+                        imgBox.innerHTML = `<span class="featured-emoji">${f.emoji || '🧸'}</span>`;
+                    }
+                }
+            }
+
+            /* --- 3. PENGATURAN KONTAK & SOSMED (dari tab Pengaturan admin) --- */
+            const s = lsGet(LS_KEYS.settings);
+            if (s) {
+                if (s.whatsapp) {
+                    window.SYNC_WA = s.whatsapp;
+                    document.querySelectorAll('a.wa, a.whatsapp-float').forEach(a => {
+                        a.href = 'https://wa.me/' + s.whatsapp;
+                    });
+                }
+                [
+                    ['instagram', '.footer-social a.ig'],
+                    ['facebook', '.footer-social a.fb'],
+                    ['tiktok', '.footer-social a.tt']
+                ].forEach(([key, sel]) => {
+                    if (s[key]) {
+                        const el = document.querySelector(sel);
+                        if (el) { el.href = s[key]; el.target = '_blank'; }
+                    }
+                });
+            }
+        }
+
+        applySync();
+
+        // Auto-update saat admin menyimpan perubahan di tab lain
+        window.addEventListener('storage', (e) => {
+            if (e.key && e.key.startsWith('wirastitch_')) applySync();
+        });
+
         // ====== NAVBAR SCROLL & BACK TO TOP ======
         const navbar = document.getElementById('navbar');
         const backToTop = document.getElementById('backToTop');
@@ -2763,7 +2897,7 @@
         const cartTotalSection = document.getElementById('cartTotalSection');
         const cartCheckout = document.getElementById('cartCheckout');
 
-        const WA_NUMBER = '6281234567890'; // ⚠️ GANTI dengan nomor WhatsApp kamu
+        const WA_NUMBER = window.SYNC_WA || '6281234567890'; // otomatis mengikuti Pengaturan admin
 
         const formatRupiah = (num) => 'Rp' + num.toLocaleString('id-ID');
 
@@ -2818,7 +2952,7 @@
             cartTotalSection.style.display = 'block';
             cartItemsEl.innerHTML = cart.map(i => `
                 <div class="cart-item" data-name="${i.name}">
-                    <div class="cart-item-image">${i.emoji}</div>
+                    <div class="cart-item-image">${/^(https?:|data:)/.test(i.emoji) ? `<img src="${i.emoji}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">` : i.emoji}</div>
                     <div class="cart-item-info">
                         <h4>${i.name}</h4>
                         <div class="cart-item-price">${formatRupiah(i.price)}</div>
@@ -2845,47 +2979,40 @@
             else if (e.target.closest('.cart-item-remove')) removeItem(name);
         });
 
-        // Tombol tambah ke keranjang di kartu produk
-        document.querySelectorAll('.btn-add-cart').forEach(btn => {
-            btn.addEventListener('click', () =>
-                addToCart(btn.dataset.name, parseInt(btn.dataset.price), btn.dataset.emoji)
-            );
+        // Tombol tambah keranjang & wishlist (delegasi: aman untuk produk hasil sinkronisasi)
+        document.getElementById('productsGrid').addEventListener('click', (e) => {
+            const addBtn = e.target.closest('.btn-add-cart');
+            if (addBtn) {
+                addToCart(addBtn.dataset.name, parseInt(addBtn.dataset.price), addBtn.dataset.emoji);
+                return;
+            }
+            const wish = e.target.closest('.product-wishlist');
+            if (wish) {
+                const active = wish.textContent.trim() === '♥';
+                wish.textContent = active ? '♡' : '♥';
+                wish.style.color = active ? '' : '#ff4757';
+            }
         });
 
-        // Tombol di section Best Seller
-        document.getElementById('featuredAddCart').addEventListener('click', () =>
-            addToCart('Boneka Bear Amigurumi Edisi Spesial', 150000, '🧸')
-        );
-
-        // Checkout via WhatsApp
-        cartCheckout.addEventListener('click', () => {
-            if (cart.length === 0) return;
-            let msg = 'Halo WiraStitch! Saya ingin memesan:\n\n';
-            cart.forEach(i => {
-                msg += `• ${i.name} (x${i.qty}) - ${formatRupiah(i.price * i.qty)}\n`;
-            });
-            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-            msg += `\nTotal: ${formatRupiah(total)}\n\nTerima kasih!`;
-            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        // Tombol di section Best Seller (mengikuti data admin)
+        document.getElementById('featuredAddCart').addEventListener('click', () => {
+            const f = window.SYNC_FEATURED;
+            if (f.buttonLink) {
+                window.open(f.buttonLink, '_blank');
+                return;
+            }
+            addToCart(f.name, f.price, f.emoji || '🧸');
         });
 
-        // ====== FILTER PRODUK ======
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
+        // ====== FILTER PRODUK (delegasi) ======
+        document.querySelector('.products-filter').addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const f = btn.dataset.filter;
             document.querySelectorAll('.product-card').forEach(card => {
                 card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
-            });
-        }));
-
-        // ====== WISHLIST ======
-        document.querySelectorAll('.product-wishlist').forEach(w => {
-            w.addEventListener('click', () => {
-                const active = w.textContent.trim() === '♥';
-                w.textContent = active ? '♡' : '♥';
-                w.style.color = active ? '' : '#ff4757';
             });
         });
 
