@@ -1725,10 +1725,9 @@
                 filter: drop-shadow(0 15px 30px rgba(139, 94, 60, 0.25));
             }
 
-            .hero-image-main .hero-emoji {
-                position: relative;
-                z-index: 2;
-                font-size: 5.5rem;
+            /* Di HP foto tampil di dalam blob SVG; img lingkaran disembunyikan */
+            .hero-image-main .hero-img {
+                display: none;
             }
 
             .floating-card {
@@ -1955,10 +1954,6 @@
                 height: min(80vw, 270px);
             }
 
-            .hero-image-main .hero-emoji {
-                font-size: 5rem;
-            }
-
             .hero-stats {
                 gap: 6px;
             }
@@ -2182,16 +2177,30 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="hero-image-main">
-                    <!-- BLOB ORGANIK (SVG) - hanya tampil di HP, bentuk sesuai sketsa -->
+                                <div class="hero-image-main">
+                    <!-- BLOB ORGANIK (SVG) - hanya tampil di HP, kini diisi foto hero-image.jpg -->
                     <svg class="hero-blob" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
                         <defs>
-                            <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#D4A574"/>
-                                <stop offset="100%" stop-color="#C49A6C"/>
-                            </linearGradient>
+                            <clipPath id="blobClip">
+                                <path d="
+                                    M 28 152
+                                    C 34 118, 82 102, 142 92
+                                    C 196 83, 228 74, 260 58
+                                    C 296 40, 348 38, 368 76
+                                    C 384 106, 362 128, 340 148
+                                    C 326 161, 326 176, 338 190
+                                    C 356 210, 360 238, 336 256
+                                    C 310 276, 276 280, 248 272
+                                    C 224 265, 208 284, 182 280
+                                    C 150 275, 140 246, 120 228
+                                    C 102 212, 74 206, 54 190
+                                    C 36 176, 22 172, 28 152
+                                    Z"/>
+                            </clipPath>
                         </defs>
-                        <path fill="url(#blobGrad)" stroke="#FFFFFF" stroke-width="6" d="
+                        <image href="hero-image.jpg" x="0" y="0" width="400" height="300"
+                               preserveAspectRatio="xMidYMid slice" clip-path="url(#blobClip)"/>
+                        <path fill="none" stroke="#FFFFFF" stroke-width="6" d="
                             M 28 152
                             C 34 118, 82 102, 142 92
                             C 196 83, 228 74, 260 58
@@ -2206,7 +2215,8 @@
                             C 36 176, 22 172, 28 152
                             Z"/>
                     </svg>
-                    <span class="hero-emoji">🧶</span>
+                    <!-- Foto tampil di desktop (lingkaran berbingkai putih) -->
+                    <img src="hero-image.jpg" alt="Rajutan handmade WiraStitch" class="hero-img">
                 </div>
                 <div class="floating-card">
                     <div class="card-emoji">👜</div>
