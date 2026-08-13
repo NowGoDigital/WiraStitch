@@ -775,6 +775,11 @@
             margin-bottom: 20px;
         }
 
+        /* Pindah baris judul: tersembunyi di desktop */
+        .about-br {
+            display: none;
+        }
+
         .about-content p {
             color: var(--text-medium);
             margin-bottom: 15px;
@@ -1768,10 +1773,21 @@
                 margin-bottom: 25px;
             }
 
-            /* Jarak antar elemen di dalam section ikut rapat */
+           /* Jarak antar elemen di dalam section ikut rapat */
             .featured-grid,
             .about-grid {
                 gap: 25px;
+            }
+
+            /* Judul About: rata tengah & pas 2 baris di HP */
+            .about-br {
+                display: inline;
+            }
+
+            .about-content h2 {
+                text-align: center;
+                font-size: 1.6rem;
+                line-height: 1.4;
             }
 
             .process-steps {
@@ -1927,9 +1943,14 @@
             }
         }
 
-        @media (max-width: 480px) {
+         @media (max-width: 480px) {
             .hero-content h1 {
                 font-size: 2rem;
+            }
+
+            /* Judul About tetap 2 baris di layar sempit */
+            .about-content h2 {
+                font-size: 1.45rem;
             }
 
             /* Blob tetap MAKSIMAL di layar sempit */
@@ -2343,7 +2364,7 @@
             </div>
             <div class="about-grid">
                 <div class="about-content">
-                    <h2>Dibuat dengan Cinta, Dirajut dengan Telaten</h2>
+                    <h2>Dibuat dengan Cinta,<br class="about-br">Dirajut dengan Telaten</h2>
                     <p>WiraStitch lahir dari kecintaan kami pada seni merajut sejak 2020. Setiap produk dikerjakan secara handmade oleh pengrajin lokal berpengalaman, bukan produksi massal.</p>
                     <p>Kami hanya menggunakan benang katun dan wol premium yang telah melalui proses kurasi, sehingga setiap produk awet, lembut, dan nyaman digunakan bertahun-tahun.</p>
                     <p>Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia. </p>
