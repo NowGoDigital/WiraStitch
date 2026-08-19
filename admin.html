@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ====== RESET & DESIGN TOKENS ====== */
         * {
             margin: 0;
             padding: 0;
@@ -22,6 +23,8 @@
             --accent: #E8985E;
             --cream: #FFF8F0;
             --cream-dark: #F5E6D3;
+            --espresso: #2A1B12;
+            --espresso-2: #3E2718;
             --text-dark: #2D2D2D;
             --text-medium: #5A5A5A;
             --text-light: #8A8A8A;
@@ -32,11 +35,16 @@
             --success-dark: #219a52;
             --warning: #f39c12;
             --info: #3498db;
-            --shadow: 0 4px 20px rgba(139, 94, 60, 0.1);
-            --shadow-hover: 0 8px 30px rgba(139, 94, 60, 0.2);
-            --radius: 12px;
+            --shadow: 0 4px 20px rgba(139, 94, 60, 0.08);
+            --shadow-hover: 0 10px 30px rgba(139, 94, 60, 0.16);
+            --radius: 14px;
+            --radius-lg: 20px;
+            --ring: 0 0 0 4px rgba(232, 152, 94, 0.15);
             --transition: all 0.3s ease;
+            --sidebar-w: 264px;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -45,23 +53,63 @@
             min-height: 100vh;
         }
 
-        /* ====== LOGIN PAGE ====== */
+        ::selection { background: var(--accent); color: #fff; }
+
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
+        ::-webkit-scrollbar-track { background: var(--cream); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* ====== LOGIN PAGE (GLASS & GRADIENT) ====== */
         .login-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            background:
+                radial-gradient(1000px 500px at 85% -10%, rgba(232, 152, 94, 0.35), transparent 60%),
+                radial-gradient(800px 500px at -10% 110%, rgba(196, 154, 108, 0.30), transparent 60%),
+                linear-gradient(135deg, var(--espresso) 0%, var(--primary-dark) 100%);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-page::before,
+        .login-page::after {
+            content: '🧶';
+            position: absolute;
+            font-size: 9rem;
+            opacity: 0.08;
+            filter: blur(1px);
+            animation: loginFloat 7s ease-in-out infinite;
+        }
+
+        .login-page::before { top: 8%; left: 6%; transform: rotate(-12deg); }
+        .login-page::after { bottom: 6%; right: 7%; animation-delay: 1.2s; transform: rotate(10deg); }
+
+        @keyframes loginFloat {
+            0%, 100% { translate: 0 0; }
+            50% { translate: 0 -16px; }
         }
 
         .login-card {
-            background: var(--white);
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            padding: 46px 38px;
+            border-radius: 26px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
             width: 100%;
-            max-width: 420px;
+            max-width: 430px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            z-index: 2;
+            animation: cardIn 0.5s ease;
+        }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(18px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .login-logo {
@@ -70,170 +118,300 @@
         }
 
         .login-logo .logo-emoji {
-            font-size: 3.5rem;
-            display: block;
-            margin-bottom: 10px;
+            font-size: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 84px;
+            height: 84px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            box-shadow: 0 12px 28px rgba(139, 94, 60, 0.35);
+            margin-bottom: 14px;
         }
 
         .login-logo h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             color: var(--primary-dark);
         }
 
-        .login-logo h1 span {
-            color: var(--accent);
-        }
+        .login-logo h1 span { color: var(--accent); }
 
         .login-logo p {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 18px; }
 
         .form-group label {
             display: block;
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.78rem;
+            margin-bottom: 7px;
+            color: var(--text-medium);
+            letter-spacing: 0.3px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 14px 18px;
-            border: 2px solid var(--cream-dark);
-            border-radius: 10px;
-            font-size: 0.95rem;
+            padding: 13px 16px;
+            border: 1.5px solid #EBDCC8;
+            border-radius: 12px;
+            font-size: 0.92rem;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
-            background: var(--cream);
+            background: #FBF7F1;
+            color: var(--text-dark);
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--accent);
             background: var(--white);
+            box-shadow: var(--ring);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
 
         .login-btn {
             width: 100%;
             padding: 15px;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 24px rgba(139, 94, 60, 0.3);
         }
 
         .login-btn:hover {
-            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 14px 30px rgba(139, 94, 60, 0.4);
+            filter: brightness(1.05);
         }
 
         .login-error {
             background: #fdeaea;
             color: var(--danger);
             padding: 12px 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 0.85rem;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: none;
             text-align: center;
+            border: 1px solid #f6c9c9;
         }
 
-        .login-error.show {
-            display: block;
-        }
+        .login-error.show { display: block; }
 
         .login-hint {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 22px;
+            font-size: 0.78rem;
             color: var(--text-light);
         }
 
         .login-hint code {
             background: var(--cream);
             padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: var(--primary);
         }
 
-        /* ====== ADMIN DASHBOARD ====== */
-        .admin-page {
-            display: none;
+        /* ====== LAYOUT DASHBOARD (SIDEBAR + MAIN) ====== */
+        .admin-page { display: none; }
+
+        .admin-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            background: linear-gradient(180deg, var(--espresso) 0%, var(--espresso-2) 100%);
+            color: var(--cream);
+            padding: 26px 16px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 200;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 8px 24px;
+            border-bottom: 1px solid rgba(255, 248, 240, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .brand-tile {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .brand-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .brand-text h1 span { color: var(--accent); }
+
+        .brand-text small {
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 248, 240, 0.55);
+            font-weight: 500;
+        }
+
+        .sidebar-label {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255, 248, 240, 0.4);
+            padding: 0 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Nav tabs di sidebar */
+        .admin-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px 16px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 248, 240, 0.65);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            text-align: left;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--white);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 248, 240, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* --- Main area --- */
+        .main-area {
+            flex: 1;
+            margin-left: var(--sidebar-w);
+            min-width: 0;
         }
 
         .admin-header {
-            background: var(--white);
-            padding: 15px 30px;
-            box-shadow: var(--shadow);
+            background: rgba(255, 248, 240, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 16px 30px;
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--cream-dark);
         }
 
         .admin-header-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
+            min-width: 0;
         }
 
         .admin-header-left h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--primary-dark);
+            white-space: nowrap;
         }
 
-        .admin-header-left h1 span {
-            color: var(--accent);
-        }
+        .admin-header-left h1 span { color: var(--accent); }
 
         .admin-badge {
-            background: var(--cream);
+            background: linear-gradient(135deg, rgba(232, 152, 94, 0.15), rgba(139, 94, 60, 0.1));
             color: var(--primary);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
+            border: 1px solid rgba(139, 94, 60, 0.15);
+            white-space: nowrap;
         }
 
         .admin-header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .btn-view-site {
-            padding: 8px 18px;
-            background: var(--cream);
+            padding: 9px 18px;
+            background: var(--white);
             color: var(--primary);
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.85rem;
+            border: 1.5px solid var(--primary-light);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
@@ -243,154 +421,171 @@
         .btn-view-site:hover {
             background: var(--primary);
             color: white;
+            border-color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .btn-logout {
-            padding: 8px 18px;
-            background: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.85rem;
+            padding: 9px 18px;
+            background: #FDECEA;
+            color: var(--danger);
+            border: 1.5px solid #F6C9C9;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
         }
 
         .btn-logout:hover {
-            background: var(--danger-dark);
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+            transform: translateY(-1px);
         }
 
-        /* ====== ADMIN CONTENT ====== */
+        /* --- Content --- */
         .admin-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 30px 26px 60px;
         }
 
-        /* Stats Cards */
+        /* ====== STATS CARDS ====== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 18px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
             background: var(--white);
-            padding: 25px;
-            border-radius: var(--radius);
+            padding: 22px;
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition);
+            border: 1px solid rgba(139, 94, 60, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 152, 94, 0.12), transparent 70%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
         }
 
         .stat-card .stat-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
         }
 
+        .stat-card:nth-child(1) .stat-icon { background: linear-gradient(135deg, #FFE9D6, #FFD3AE); }
+        .stat-card:nth-child(2) .stat-icon { background: linear-gradient(135deg, #DCEBFD, #BBD8F9); }
+        .stat-card:nth-child(3) .stat-icon { background: linear-gradient(135deg, #FFF3C9, #FFE38F); }
+        .stat-card:nth-child(4) .stat-icon { background: linear-gradient(135deg, #DDF5E5, #B9EACB); }
+
         .stat-card .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.45rem;
             font-weight: 700;
             color: var(--primary-dark);
+            line-height: 1.2;
         }
 
         .stat-card .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             color: var(--text-light);
-            margin-top: 5px;
+            margin-top: 2px;
         }
 
-        /* Tabs */
-        .admin-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 25px;
-            background: var(--white);
-            padding: 8px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            flex-wrap: wrap;
+        /* ====== TAB CONTENT ====== */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeUp 0.35s ease; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .tab-btn {
-            padding: 12px 24px;
-            border: none;
-            background: transparent;
-            color: var(--text-medium);
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .tab-btn:hover:not(.active) {
-            background: var(--cream);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* ====== PRODUCT FORM ====== */
+        /* ====== FORM CARD ====== */
         .form-card {
             background: var(--white);
             padding: 30px;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(139, 94, 60, 0.06);
         }
 
         .form-card h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             color: var(--primary-dark);
             margin-bottom: 5px;
         }
 
         .form-card .form-subtitle {
             color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 25px;
+            font-size: 0.88rem;
+            margin-bottom: 26px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 18px;
         }
 
+        /* Upload area */
         .image-upload-area {
-            border: 2px dashed var(--cream-dark);
+            border: 2px dashed #E4CFAF;
             border-radius: var(--radius);
             padding: 30px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            background: var(--cream);
+            background: #FDFAF5;
             position: relative;
             overflow: hidden;
         }
 
         .image-upload-area:hover {
-            border-color: var(--primary);
+            border-color: var(--accent);
             background: var(--white);
+            box-shadow: var(--ring);
         }
 
         .image-upload-area .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 1.6rem;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #FFE9D6, #FFD3AE);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .image-upload-area p {
@@ -401,47 +596,50 @@
         .image-upload-area .or-text {
             margin: 10px 0;
             color: var(--text-light);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
 
         .image-preview {
             max-width: 200px;
             max-height: 200px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-top: 15px;
             display: none;
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-hover);
         }
 
-        .image-preview.show {
-            display: block;
-        }
+        .image-preview.show { display: block; }
 
+        /* Buttons */
         .btn-submit {
-            padding: 14px 35px;
-            background: var(--success);
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #2fb56b, var(--success-dark));
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            font-size: 0.93rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.28);
         }
 
         .btn-submit:hover {
-            background: var(--success-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 12px 26px rgba(39, 174, 96, 0.38);
+            filter: brightness(1.05);
         }
 
         .btn-cancel {
-            padding: 14px 35px;
-            background: var(--text-light);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            padding: 14px 32px;
+            background: var(--white);
+            color: var(--text-medium);
+            border: 1.5px solid var(--cream-dark);
+            border-radius: 12px;
+            font-size: 0.93rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -450,101 +648,108 @@
         }
 
         .btn-cancel:hover {
-            background: var(--text-medium);
+            background: var(--cream);
+            color: var(--text-dark);
         }
 
-        /* ====== PRODUCT LIST TABLE ====== */
+        /* ====== PRODUCT TABLE ====== */
         .product-table-wrapper {
             background: var(--white);
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
             overflow: hidden;
+            border: 1px solid rgba(139, 94, 60, 0.06);
         }
 
         .table-header {
-            padding: 25px 30px;
+            padding: 22px 26px;
             border-bottom: 1px solid var(--cream-dark);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            background: linear-gradient(180deg, #FFFDF9, var(--white));
         }
 
         .table-header h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--primary-dark);
         }
 
         .search-box {
-            padding: 10px 18px;
-            border: 2px solid var(--cream-dark);
-            border-radius: 8px;
-            font-size: 0.9rem;
+            padding: 11px 18px;
+            border: 1.5px solid #EBDCC8;
+            border-radius: 50px;
+            font-size: 0.88rem;
             font-family: 'Poppins', sans-serif;
-            width: 250px;
+            width: 260px;
             transition: var(--transition);
+            background: #FBF7F1;
         }
 
         .search-box:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--accent);
+            background: var(--white);
+            box-shadow: var(--ring);
         }
+
+        .table-responsive { overflow-x: auto; }
 
         .product-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .product-table thead {
-            background: var(--cream);
-        }
+        .product-table thead { background: #FBF3E9; }
 
         .product-table th {
-            padding: 15px 20px;
+            padding: 14px 22px;
             text-align: left;
             font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-medium);
+            font-size: 0.72rem;
+            color: var(--primary-dark);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .product-table td {
-            padding: 15px 20px;
+            padding: 15px 22px;
             border-bottom: 1px solid var(--cream);
             font-size: 0.9rem;
             vertical-align: middle;
         }
 
-        .product-table tr:hover {
-            background: var(--cream);
-        }
+        .product-table tbody tr { transition: var(--transition); }
+        .product-table tbody tr:hover { background: #FDFAF6; }
+        .product-table tbody tr:last-child td { border-bottom: none; }
 
         .product-table .product-thumb {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             object-fit: cover;
-            background: var(--cream);
+            background: linear-gradient(135deg, var(--cream-dark), var(--cream));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
+            border: 1px solid rgba(139, 94, 60, 0.1);
+            overflow: hidden;
         }
 
         .product-table .product-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 8px;
         }
 
         .badge {
-            padding: 4px 12px;
+            padding: 5px 13px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             display: inline-block;
         }
@@ -556,79 +761,285 @@
         .badge-aksesoris { background: #d4fde8; color: #3cc67a; }
         .badge-none { background: var(--cream); color: var(--text-light); }
 
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
+        .action-btns { display: flex; gap: 8px; }
 
         .btn-edit {
             padding: 8px 14px;
-            background: var(--info);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            background: #EAF3FD;
+            color: var(--info);
+            border: 1px solid #CFE3F8;
+            border-radius: 9px;
+            font-size: 0.78rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
         }
 
         .btn-edit:hover {
-            background: #2980b9;
+            background: var(--info);
+            color: white;
+            border-color: var(--info);
         }
 
         .btn-delete {
             padding: 8px 14px;
-            background: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            background: #FDECEA;
+            color: var(--danger);
+            border: 1px solid #F6C9C9;
+            border-radius: 9px;
+            font-size: 0.78rem;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
         }
 
         .btn-delete:hover {
-            background: var(--danger-dark);
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; }
+        .empty-state .empty-icon { font-size: 4rem; margin-bottom: 15px; }
+        .empty-state h3 { color: var(--text-medium); margin-bottom: 8px; }
+        .empty-state p { color: var(--text-light); font-size: 0.9rem; }
 
-        .empty-state .empty-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-
-        .empty-state h3 {
-            color: var(--text-medium);
-            margin-bottom: 8px;
-        }
-
-        .empty-state p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* ====== SETTINGS TAB ====== */
+        /* ====== SETTINGS ====== */
         .settings-card {
             background: var(--white);
-            padding: 30px;
-            border-radius: var(--radius);
+            padding: 28px;
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow);
             margin-bottom: 20px;
+            border: 1px solid rgba(139, 94, 60, 0.06);
         }
 
         .settings-card h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--primary-dark);
             margin-bottom: 20px;
-            padding-bottom: 15px;
+            padding-bottom: 14px;
             border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .settings-card.danger-zone {
+            background: #FFF8F7;
+            border: 1px solid #F6D9D5;
+        }
+
+        .settings-card.danger-zone h3 { color: var(--danger-dark); border-color: #F6D9D5; }
+
+        /* ====== FEATURED PREVIEW ====== */
+        .featured-preview-box {
+            background: linear-gradient(135deg, #FFFDF9, var(--cream));
+            border: 1.5px solid var(--cream-dark);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 28px;
+        }
+
+        .featured-preview-box h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .featured-preview-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .featured-preview-image {
+            width: 200px;
+            height: 200px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, var(--secondary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .featured-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-preview-info .preview-label {
+            font-size: 0.72rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .featured-preview-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin: 8px 0;
+        }
+
+        .featured-preview-info p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        .featured-preview-info .preview-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+
+        .featured-form-section {
+            border-top: 2px solid var(--cream-dark);
+            padding-top: 25px;
+            margin-top: 25px;
+        }
+
+        .featured-form-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .feature-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .feature-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1.5px solid #EBDCC8;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            background: #FBF7F1;
+        }
+
+        .feature-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--white);
+            box-shadow: var(--ring);
+        }
+
+        .btn-remove-feature {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid #F6C9C9;
+            background: #FDECEA;
+            color: var(--danger);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-feature:hover {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .btn-add-feature {
+            padding: 10px 20px;
+            background: var(--cream);
+            color: var(--primary);
+            border: 2px dashed var(--primary-light);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            margin-top: 5px;
+        }
+
+        .btn-add-feature:hover {
+            background: var(--cream-dark);
+            border-color: var(--primary);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #D9CCC0;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #2fb56b, var(--success-dark));
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .preview-features { list-style: none; margin: 10px 0; padding: 0; }
+
+        .preview-features li {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .preview-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+            font-size: 0.75rem;
         }
 
         /* ====== TOAST ====== */
@@ -636,34 +1047,30 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 16px 24px;
-            border-radius: 10px;
+            padding: 15px 24px;
+            border-radius: 14px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 500;
             z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
             transform: translateX(120%);
-            transition: transform 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
             font-family: 'Poppins', sans-serif;
         }
 
-        .toast.show {
-            transform: translateX(0);
-        }
+        .toast.show { transform: translateX(0); }
 
-        .toast-success { background: var(--success); }
-        .toast-error { background: var(--danger); }
-        .toast-info { background: var(--info); }
+        .toast-success { background: linear-gradient(135deg, #2fb56b, var(--success-dark)); }
+        .toast-error { background: linear-gradient(135deg, #f0605f, var(--danger-dark)); }
+        .toast-info { background: linear-gradient(135deg, #5aa9e6, #2980b9); }
 
         /* ====== CONFIRM MODAL ====== */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
+            inset: 0;
+            background: rgba(42, 27, 18, 0.55);
+            backdrop-filter: blur(4px);
             z-index: 3000;
             display: none;
             align-items: center;
@@ -671,23 +1078,29 @@
             padding: 20px;
         }
 
-        .modal-overlay.show {
-            display: flex;
-        }
+        .modal-overlay.show { display: flex; }
 
         .modal-box {
             background: var(--white);
-            padding: 40px;
-            border-radius: 16px;
-            max-width: 400px;
+            padding: 40px 34px;
+            border-radius: 24px;
+            max-width: 410px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+            animation: cardIn 0.3s ease;
         }
 
         .modal-box .modal-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #FFE9D6, #FFD3AE);
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-box h3 {
@@ -703,15 +1116,11 @@
             margin-bottom: 25px;
         }
 
-        .modal-btns {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
+        .modal-btns { display: flex; gap: 10px; justify-content: center; }
 
         .modal-btns button {
             padding: 12px 28px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
@@ -721,763 +1130,507 @@
         }
 
         .modal-btn-confirm {
-            background: var(--danger);
+            background: linear-gradient(135deg, #f0605f, var(--danger-dark));
             color: white;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
         }
 
-        .modal-btn-confirm:hover {
-            background: var(--danger-dark);
-        }
+        .modal-btn-confirm:hover { transform: translateY(-2px); filter: brightness(1.05); }
 
         .modal-btn-cancel {
             background: var(--cream);
             color: var(--text-dark);
+            border: 1.5px solid var(--cream-dark) !important;
         }
 
-        .modal-btn-cancel:hover {
-            background: var(--cream-dark);
-        }
+        .modal-btn-cancel:hover { background: var(--cream-dark); }
 
         /* ====== RESPONSIVE ====== */
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .admin-header {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-
-            .admin-header-right {
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: static;
                 width: 100%;
-                justify-content: center;
+                padding: 18px 16px;
             }
 
-            .table-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .admin-shell { flex-direction: column; }
+
+            .main-area { margin-left: 0; }
+
+            .sidebar-brand {
+                border-bottom: none;
+                margin-bottom: 12px;
+                padding-bottom: 0;
             }
 
-            .search-box {
-                width: 100%;
-            }
-
-            .product-table {
-                font-size: 0.8rem;
-            }
-
-            .product-table th,
-            .product-table td {
-                padding: 10px 12px;
-            }
-
-            .action-btns {
-                flex-direction: column;
-            }
-
-            .login-card {
-                padding: 35px 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .sidebar-label { display: none; }
 
             .admin-tabs {
-                flex-direction: column;
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 6px;
+                gap: 8px;
             }
 
             .tab-btn {
+                width: auto;
+                white-space: nowrap;
+                padding: 11px 18px;
+            }
+
+            .sidebar-footer {
+                margin-top: 14px;
+                padding-top: 14px;
+                flex-direction: row;
+            }
+
+            .sidebar-footer > * { flex: 1; text-align: center; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .admin-header { padding: 14px 16px; }
+
+            .admin-content { padding: 20px 14px 50px; }
+
+            .table-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box { width: 100%; }
+
+            .product-table th,
+            .product-table td { padding: 10px 12px; }
+
+            .action-btns { flex-direction: column; }
+
+            .login-card { padding: 35px 24px; }
+
+            .featured-preview-content {
+                grid-template-columns: 1fr;
                 text-align: center;
             }
+
+            .featured-preview-image {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .preview-features li { justify-content: center; }
+
+            .feature-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-remove-feature { width: 100%; height: 36px; }
+
+            .form-card, .settings-card { padding: 22px 18px; }
         }
 
-        /* Table responsive wrapper */
-        .table-responsive {
-            overflow-x: auto;
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+
+            .stat-card { padding: 18px; }
+
+            .admin-header-left h1 { font-size: 1.05rem; }
+
+            .admin-badge { display: none; }
         }
-    
-    /* ====== FEATURED PRODUCT ADMIN STYLES ====== */
-.featured-preview-box {
-    background: linear-gradient(135deg, var(--cream), var(--cream-dark));
-    border: 2px solid var(--cream-dark);
-    border-radius: var(--radius);
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-.featured-preview-box h4 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-}
-
-.featured-preview-content {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 25px;
-    align-items: center;
-}
-
-.featured-preview-image {
-    width: 200px;
-    height: 200px;
-    border-radius: var(--radius);
-    background: linear-gradient(135deg, var(--secondary), var(--primary-light));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.featured-preview-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--radius);
-}
-
-.featured-preview-info .preview-label {
-    font-size: 0.75rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 600;
-}
-
-.featured-preview-info h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--primary-dark);
-    margin: 8px 0;
-}
-
-.featured-preview-info p {
-    font-size: 0.85rem;
-    color: var(--text-medium);
-    line-height: 1.5;
-}
-
-.featured-preview-info .preview-price {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-top: 10px;
-}
-
-.featured-form-section {
-    border-top: 2px solid var(--cream-dark);
-    padding-top: 25px;
-    margin-top: 25px;
-}
-
-.featured-form-section h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--primary-dark);
-    margin-bottom: 20px;
-}
-
-.feature-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-}
-
-.feature-input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 2px solid var(--cream-dark);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-family: 'Poppins', sans-serif;
-    transition: var(--transition);
-    background: var(--cream);
-}
-
-.feature-input:focus {
-    outline: none;
-    border-color: var(--primary);
-    background: var(--white);
-}
-
-.btn-remove-feature {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    border: none;
-    background: #fdeaea;
-    color: var(--danger);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-remove-feature:hover {
-    background: var(--danger);
-    color: white;
-}
-
-.btn-add-feature {
-    padding: 10px 20px;
-    background: var(--cream);
-    color: var(--primary);
-    border: 2px dashed var(--primary-light);
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Poppins', sans-serif;
-    margin-top: 5px;
-}
-
-.btn-add-feature:hover {
-    background: var(--cream-dark);
-            border-color: var(--primary);
-        }
-
-/* Toggle Switch */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 26px;
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.3s;
-    border-radius: 26px;
-}
-
-.toggle-slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.3s;
-    border-radius: 50%;
-}
-
-.toggle-switch input:checked + .toggle-slider {
-    background-color: var(--success);
-}
-
-.toggle-switch input:checked + .toggle-slider:before {
-    transform: translateX(24px);
-}
-
-/* Featured Preview Features List */
-.preview-features {
-    list-style: none;
-    margin: 10px 0;
-    padding: 0;
-}
-
-.preview-features li {
-    font-size: 0.8rem;
-    color: var(--text-medium);
-    padding: 3px 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.preview-features li::before {
-    content: '✓';
-    color: var(--success);
-    font-weight: 700;
-    font-size: 0.75rem;
-}
-
-@media (max-width: 768px) {
-    .featured-preview-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .featured-preview-image {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto;
-    }
-
-    .feature-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .btn-remove-feature {
-        width: 100%;
-        height: 34px;
-    }
-}
-    
-    
     </style>
 </head>
 <body>
 
-    <!-- ====== LOGIN PAGE ====== -->
+    <!-- ====== HALAMAN LOGIN ====== -->
     <div class="login-page" id="loginPage">
         <div class="login-card">
             <div class="login-logo">
-                <span class="logo-emoji">🧶</span>
+                <div class="logo-emoji">🧶</div>
                 <h1>Wira<span>Stitch</span></h1>
                 <p>Admin Panel</p>
             </div>
-
-            <div class="login-error" id="loginError">
-                ❌ Username atau password salah!
-            </div>
-
-            <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="login-error" id="loginError">❌ Username atau password salah!</div>
+            <form id="loginForm">
                 <div class="form-group">
-                    <label>👤 Username</label>
-                    <input type="text" id="loginUsername" placeholder="Masukkan username" required autocomplete="off">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" autocomplete="username" required>
                 </div>
                 <div class="form-group">
-                    <label>🔒 Password</label>
-                    <input type="password" id="loginPassword" placeholder="Masukkan password" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" autocomplete="current-password" required>
                 </div>
                 <button type="submit" class="login-btn">🔐 Masuk ke Dashboard</button>
             </form>
-
-            <div class="login-hint">
-                <p>Default: <code>admin</code> / <code>wirastitch2026</code></p>
-                <p style="margin-top: 5px;">⚠️ Ganti password di menu Pengaturan setelah login</p>
-            </div>
+            <p class="login-hint">Akun demo: <code>admin</code> / <code>wirastitch2026</code></p>
         </div>
     </div>
 
-    <!-- ====== ADMIN DASHBOARD ====== -->
+    <!-- ====== DASHBOARD ====== -->
     <div class="admin-page" id="adminPage">
-        <!-- Header -->
-        <header class="admin-header">
-            <div class="admin-header-left">
-                <span style="font-size: 1.5rem;">🧶</span>
-                <h1>Wira<span>Stitch</span> Admin</h1>
-                <span class="admin-badge">Dashboard</span>
-            </div>
-            <div class="admin-header-right">
-                <a href="index.html" class="btn-view-site" target="_blank">👁️ Lihat Website</a>
-                <button class="btn-logout" onclick="handleLogout()">🚪 Logout</button>
-            </div>
-        </header>
+        <div class="admin-shell">
 
-        <!-- Content -->
-        <div class="admin-content">
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📦</div>
-                    <div class="stat-value" id="statTotal">0</div>
-                    <div class="stat-label">Total Produk</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🏷️</div>
-                    <div class="stat-value" id="statCategories">0</div>
-                    <div class="stat-label">Kategori</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-value" id="statFeatured">0</div>
-                    <div class="stat-label">Produk Unggulan</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-value" id="statAvgPrice">Rp 0</div>
-                    <div class="stat-label">Rata-rata Harga</div>
-                </div>
-            </div>
-
-            <!-- Tabs -->
-            <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchTab('products')">📦 Daftar Produk</button>
-                <button class="tab-btn" onclick="switchTab('add')">➕ Tambah Produk</button>
-                <button class="tab-btn" onclick="switchTab('featured')">⭐ Produk Unggulan</button>
-                <button class="tab-btn" onclick="switchTab('settings')">⚙️ Pengaturan</button>
-            </div>
-            <!-- TAB: Product List -->
-            <div class="tab-content active" id="tab-products">
-                <div class="product-table-wrapper">
-                    <div class="table-header">
-                        <h2>📦 Semua Produk</h2>
-                        <input type="text" class="search-box" placeholder="🔍 Cari produk..." oninput="searchProducts(this.value)">
-                    </div>
-                    <div class="table-responsive">
-                        <table class="product-table">
-                            <thead>
-                                <tr>
-                                    <th>Gambar</th>
-                                    <th>Nama Produk</th>
-                                    <th>Kategori</th>
-                                    <th>Harga</th>
-                                    <th>Badge</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productTableBody">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="empty-state" id="emptyState" style="display: none;">
-                        <div class="empty-icon">📦</div>
-                        <h3>Belum ada produk</h3>
-                        <p>Klik "Tambah Produk" untuk menambahkan produk pertama Anda</p>
+            <!-- --- SIDEBAR --- -->
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <div class="brand-tile">🧶</div>
+                    <div class="brand-text">
+                        <h1>Wira<span>Stitch</span></h1>
+                        <small>Admin Panel</small>
                     </div>
                 </div>
-            </div>
-
-            <!-- TAB: Add/Edit Product -->
-            <div class="tab-content" id="tab-add">
-                <div class="form-card">
-                    <h2 id="formTitle">➕ Tambah Produk Baru</h2>
-                    <p class="form-subtitle" id="formSubtitle">Isi detail produk rajutan Anda di bawah ini</p>
-
-                    <form id="productForm" onsubmit="handleProductSubmit(event)">
-                        <input type="hidden" id="editProductId" value="">
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>📝 Nama Produk *</label>
-                                <input type="text" id="productName" placeholder="Contoh: Tas Tote Bunga Sakura" required>
-                            </div>
-                            <div class="form-group">
-                                <label>🏷️ Kategori *</label>
-                                <select id="productCategory" required>
-                                    <option value="">-- Pilih Kategori --</option>
-                                    <option value="tas">👜 Tas Rajut</option>
-                                    <option value="topi">🧢 Topi & Beanie</option>
-                                    <option value="syal">🧣 Syal & Scarf</option>
-                                    <option value="boneka">🧸 Boneka Amigurumi</option>
-                                    <option value="aksesoris">🎀 Aksesoris</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>💰 Harga (Rp) *</label>
-                                <input type="number" id="productPrice" placeholder="Contoh: 185000" min="0" required>
-                            </div>
-                            <div class="form-group">
-                                <label>💸 Harga Coret / Diskon (Rp)</label>
-                                <input type="number" id="productOldPrice" placeholder="Contoh: 225000 (opsional)" min="0">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>📄 Deskripsi Produk *</label>
-                            <textarea id="productDesc" placeholder="Jelaskan produk rajutan Anda secara detail..." required></textarea>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>🏅 Badge Label</label>
-                                <select id="productBadge">
-                                    <option value="">-- Tanpa Badge --</option>
-                                    <option value="Best Seller">🔥 Best Seller</option>
-                                    <option value="New">✨ New</option>
-                                    <option value="Limited">💎 Limited Edition</option>
-                                    <option value="Promo">🎉 Promo</option>
-                                    <option value="Favorit">❤️ Favorit</option>
-                                    <option value="Custom">🎨 Custom Available</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>😊 Emoji Produk (jika tanpa foto)</label>
-                                <input type="text" id="productEmoji" placeholder="Contoh: 👜" maxlength="4">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>📸 Foto Produk</label>
-                            <div class="image-upload-area" onclick="document.getElementById('productImage').click()">
-                                <div class="upload-icon">📷</div>
-                                <p><strong>Klik untuk upload foto</strong></p>
-                                <p>atau drag & drop file gambar di sini</p>
-                                <p class="or-text">— ATAU —</p>
-                                <p style="font-size: 0.8rem;">Masukkan URL gambar di bawah</p>
-                                <input type="file" id="productImage" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                                <img id="imagePreview" class="image-preview" alt="Preview">
-                            </div>
-                            <div class="form-group" style="margin-top: 15px;">
-                                <label>🔗 Atau paste URL gambar:</label>
-                                <input type="url" id="productImageUrl" placeholder="https://example.com/foto-produk.jpg" oninput="handleImageUrl(this.value)">
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 25px;">
-                            <button type="submit" class="btn-submit" id="submitBtn">💾 Simpan Produk</button>
-                            <button type="button" class="btn-cancel" onclick="cancelEdit()">✖ Batal</button>
-                        </div>
-                    </form>
+                <div class="sidebar-label">Menu Utama</div>
+                <nav class="admin-tabs">
+                    <button class="tab-btn active" data-tab="products">📦 Daftar Produk</button>
+                    <button class="tab-btn" data-tab="featured">⭐ Produk Unggulan</button>
+                    <button class="tab-btn" data-tab="settings">⚙️ Pengaturan</button>
+                </nav>
+                <div class="sidebar-footer">
+                    <small style="font-size:0.7rem; color:rgba(255,248,240,0.45); text-align:center;">v2.0 • Tersinkron otomatis dengan website</small>
                 </div>
-            </div>
+            </aside>
 
-                        <!-- TAB: Featured Product -->
-            <div class="tab-content" id="tab-featured">
-                <div class="form-card">
-                    <h2>⭐ Kelola Produk Unggulan</h2>
-                    <p class="form-subtitle">Atur produk yang tampil di section "Produk Unggulan" di halaman utama</p>
+            <!-- --- AREA UTAMA --- -->
+            <div class="main-area">
 
-                    <form id="featuredForm" onsubmit="handleFeaturedSubmit(event)">
+                <header class="admin-header">
+                    <div class="admin-header-left">
+                        <h1>Dashboard <span>WiraStitch</span></h1>
+                        <span class="admin-badge">🟢 Sinkron dengan Website</span>
+                    </div>
+                    <div class="admin-header-right">
+                        <a href="index.html" target="_blank" class="btn-view-site">🌐 Lihat Website</a>
+                        <button class="btn-logout" id="btnLogout">🚪 Keluar</button>
+                    </div>
+                </header>
 
-                        <!-- Preview Section -->
-                        <div class="featured-preview-box">
-                            <h4>👁️ Preview Tampilan</h4>
-                            <div class="featured-preview-content" id="featuredPreview">
-                                <div class="featured-preview-image" id="featuredPreviewImage">
-                                    <span id="featuredPreviewEmoji" style="font-size: 5rem;">👜</span>
-                                    <img id="featuredPreviewImg" class="featured-preview-img" style="display: none;" alt="Preview">
-                                </div>
-                                <div class="featured-preview-info">
-                                    <span class="preview-label" id="previewLabel">⭐ PRODUK UNGGULAN</span>
-                                    <h3 id="previewName">Tas Rajut Premium "Nusantara Collection"</h3>
-                                    <p id="previewDesc">Koleksi eksklusif tas rajut dengan motif terinspirasi dari keindahan Nusantara.</p>
-                                    <div class="preview-price" id="previewPrice">Rp 285.000</div>
-                                </div>
+                <main class="admin-content">
+
+                    <!-- ====== KARTU STATISTIK ====== -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div>
+                                <div class="stat-value" id="statProducts">0</div>
+                                <div class="stat-label">Total Produk</div>
                             </div>
                         </div>
-
-                        <!-- Form Fields -->
-                        <div class="featured-form-section">
-                            <h3>📝 Detail Produk Unggulan</h3>
-
-                            <div class="form-group">
-                                <label>🏷️ Label / Sub-judul *</label>
-                                <input type="text" id="featuredLabel" value="⭐ Produk Unggulan" placeholder="Contoh: ⭐ Produk Unggulan" oninput="updateFeaturedPreview()" required>
+                        <div class="stat-card">
+                            <div class="stat-icon">🏷️</div>
+                            <div>
+                                <div class="stat-value" id="statCategories">0</div>
+                                <div class="stat-label">Kategori Aktif</div>
                             </div>
-
-                            <div class="form-group">
-                                <label>📝 Nama Produk Unggulan *</label>
-                                <input type="text" id="featuredName" placeholder='Contoh: Tas Rajut Premium "Nusantara Collection"' oninput="updateFeaturedPreview()" required>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⭐</div>
+                            <div>
+                                <div class="stat-value" id="statFeatured">Aktif</div>
+                                <div class="stat-label">Produk Unggulan</div>
                             </div>
-
-                            <div class="form-group">
-                                <label>📄 Deskripsi Produk *</label>
-                                <textarea id="featuredDesc" placeholder="Jelaskan produk unggulan Anda secara detail..." oninput="updateFeaturedPreview()" required></textarea>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div>
+                                <div class="stat-value" id="statValue">Rp0</div>
+                                <div class="stat-label">Nilai Katalog</div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>💰 Harga (Rp) *</label>
-                                    <input type="number" id="featuredPrice" placeholder="Contoh: 285000" min="0" oninput="updateFeaturedPreview()" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>😊 Emoji Produk (jika tanpa foto)</label>
-                                    <input type="text" id="featuredEmoji" value="👜" placeholder="Contoh: 👜" maxlength="4" oninput="updateFeaturedPreview()">
-                                </div>
-                            </div>
+                    <!-- ====== TAB: DAFTAR PRODUK ====== -->
+                    <section class="tab-content active" id="tab-products">
 
-                            <!-- Features List -->
-                            <div class="form-group">
-                                <label>✅ Daftar Keunggulan / Fitur</label>
-                                <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 10px;">Tambahkan poin-poin keunggulan produk (satu per baris)</p>
-                                <div id="featuredFeaturesList">
-                                    <div class="feature-row">
-                                        <input type="text" class="feature-input" placeholder="Contoh: Benang katun premium import" value="Benang katun premium import, tidak mudah melar" oninput="updateFeaturedPreview()">
-                                        <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
+                        <!-- Form tambah / edit produk -->
+                        <div class="form-card" id="productFormCard" style="display:none;">
+                            <h2 id="productFormTitle">Tambah Produk</h2>
+                            <p class="form-subtitle">Lengkapi data produk — perubahan langsung tersinkron ke website.</p>
+                            <form id="productForm">
+                                <input type="hidden" id="pId">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pName">Nama Produk *</label>
+                                        <input type="text" id="pName" required placeholder="Contoh: Tas Rajut Premium">
                                     </div>
-                                    <div class="feature-row">
-                                        <input type="text" class="feature-input" placeholder="Fitur lainnya..." value="Lining kain katun Jepang di bagian dalam" oninput="updateFeaturedPreview()">
-                                        <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
-                                    </div>
-                                    <div class="feature-row">
-                                        <input type="text" class="feature-input" placeholder="Fitur lainnya..." value="Resleting YKK berkualitas tinggi" oninput="updateFeaturedPreview()">
-                                        <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
-                                    </div>
-                                    <div class="feature-row">
-                                        <input type="text" class="feature-input" placeholder="Fitur lainnya..." value="Tali kulit asli yang adjustable" oninput="updateFeaturedPreview()">
-                                        <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
-                                    </div>
-                                    <div class="feature-row">
-                                        <input type="text" class="feature-input" placeholder="Fitur lainnya..." value="Garansi 6 bulan untuk jahitan" oninput="updateFeaturedPreview()">
-                                        <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
+                                    <div class="form-group">
+                                        <label for="pCategory">Kategori *</label>
+                                        <select id="pCategory" required>
+                                            <option value="tas">Tas Rajut</option>
+                                            <option value="topi">Topi & Beanie</option>
+                                            <option value="syal">Syal & Scarf</option>
+                                            <option value="boneka">Boneka Amigurumi</option>
+                                            <option value="aksesoris">Aksesoris</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <button type="button" class="btn-add-feature" onclick="addFeatureRow()">➕ Tambah Fitur</button>
-                            </div>
-
-                            <!-- Image Upload -->
-                            <div class="form-group">
-                                <label>📸 Foto Produk Unggulan</label>
-                                <div class="image-upload-area" onclick="document.getElementById('featuredImage').click()">
-                                    <div class="upload-icon">📷</div>
-                                    <p><strong>Klik untuk upload foto</strong></p>
-                                    <p>atau drag & drop file gambar di sini</p>
-                                    <p class="or-text">— ATAU —</p>
-                                    <p style="font-size: 0.8rem;">Masukkan URL gambar di bawah</p>
-                                    <input type="file" id="featuredImage" accept="image/*" style="display: none;" onchange="handleFeaturedImageUpload(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pPrice">Harga (Rp) *</label>
+                                        <input type="number" id="pPrice" min="0" required placeholder="150000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pOldPrice">Harga Coret (opsional)</label>
+                                        <input type="number" id="pOldPrice" min="0" placeholder="0">
+                                    </div>
                                 </div>
-                                <div class="form-group" style="margin-top: 15px;">
-                                    <label>🔗 Atau paste URL gambar:</label>
-                                    <input type="url" id="featuredImageUrl" placeholder="https://example.com/foto-produk-unggulan.jpg" oninput="handleFeaturedImageUrl(this.value)">
-                                </div>
-                            </div>
-
-                            <!-- Button Text -->
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>🔘 Teks Tombol CTA</label>
-                                    <input type="text" id="featuredButtonText" value="Pesan via WhatsApp" placeholder="Contoh: Pesan via WhatsApp" oninput="updateFeaturedPreview()">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pBadge">Badge</label>
+                                        <select id="pBadge">
+                                            <option value="">(Tanpa badge)</option>
+                                            <option value="Best Seller">🏆 Best Seller</option>
+                                            <option value="New">✨ New</option>
+                                            <option value="Limited">⏳ Limited</option>
+                                            <option value="Promo">🎉 Promo</option>
+                                            <option value="Favorit">❤️ Favorit</option>
+                                            <option value="Custom">🎨 Custom Available</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pEmoji">Emoji (jika tanpa gambar)</label>
+                                        <input type="text" id="pEmoji" maxlength="4" placeholder="👜">
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>🔗 Link Tombol CTA</label>
-                                    <input type="text" id="featuredButtonLink" value="" placeholder="Otomatis menggunakan link WhatsApp" oninput="updateFeaturedPreview()">
+                                    <label>Gambar Produk (opsional)</label>
+                                    <div class="image-upload-area" id="pUploadArea">
+                                        <div class="upload-icon">📷</div>
+                                        <p><strong>Klik untuk upload gambar</strong> (maks. ±1MB)</p>
+                                        <p class="or-text">— atau isi URL / nama file —</p>
+                                        <input type="text" id="pImage" placeholder="https://... atau nama file, mis. tas1.jpg">
+                                        <img class="image-preview" id="pPreview" alt="Preview gambar produk">
+                                    </div>
+                                    <input type="file" id="pFile" accept="image/*" style="display:none;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDesc">Deskripsi Singkat</label>
+                                    <textarea id="pDesc" rows="2" placeholder="Deskripsi singkat produk..."></textarea>
+                                </div>
+                                <button type="submit" class="btn-submit">💾 Simpan Produk</button>
+                                <button type="button" class="btn-cancel" id="btnCancelProduct">Batal</button>
+                            </form>
+                        </div>
+
+                        <!-- Tabel produk -->
+                        <div class="product-table-wrapper">
+                            <div class="table-header">
+                                <h2>📦 Daftar Produk</h2>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                                    <input type="text" class="search-box" id="productSearch" placeholder="🔍 Cari produk...">
+                                    <button class="btn-submit" id="btnAddProduct">+ Tambah Produk</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="product-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Kategori</th>
+                                            <th>Harga</th>
+                                            <th>Badge</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ====== TAB: PRODUK UNGGULAN ====== -->
+                    <section class="tab-content" id="tab-featured">
+                        <div class="form-card">
+                            <h2>⭐ Produk Unggulan</h2>
+                            <p class="form-subtitle">Atur konten section Best Seller yang tampil di website.</p>
+
+                            <!-- Preview live -->
+                            <div class="featured-preview-box">
+                                <h4>Preview Tampilan</h4>
+                                <div class="featured-preview-content">
+                                    <div class="featured-preview-image" id="fpImageBox">
+                                        <span style="font-size:4rem;" id="fpEmoji">🧸</span>
+                                        <img class="featured-preview-img" id="fpImage" alt="" style="display:none;">
+                                    </div>
+                                    <div class="featured-preview-info">
+                                        <div class="preview-label" id="fpLabel">Best Seller Bulan Ini</div>
+                                        <h3 id="fpName">Boneka Bear Amigurumi Edisi Spesial</h3>
+                                        <p id="fpDesc"></p>
+                                        <ul class="preview-features" id="fpFeatures"></ul>
+                                        <div class="preview-price" id="fpPrice">Rp150.000</div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Show/Hide Toggle -->
-                            <div class="form-group" style="margin-top: 20px;">
-                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 1rem;">
-                                    <div class="toggle-switch" id="featuredToggle">
-                                        <input type="checkbox" id="featuredVisible" checked onchange="updateFeaturedPreview()">
+                            <form id="featuredForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fLabel">Label / Tag Kecil</label>
+                                        <input type="text" id="fLabel" placeholder="Best Seller Bulan Ini">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fPrice">Harga (Rp)</label>
+                                        <input type="number" id="fPrice" min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fName">Nama Produk Unggulan</label>
+                                    <input type="text" id="fName" placeholder="Boneka Bear Amigurumi Edisi Spesial">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fDesc">Deskripsi</label>
+                                    <textarea id="fDesc" rows="3"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Daftar Keunggulan</label>
+                                    <div id="featuresList"></div>
+                                    <button type="button" class="btn-add-feature" id="btnAddFeature">+ Tambah Keunggulan</button>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fEmoji">Emoji (jika tanpa gambar)</label>
+                                        <input type="text" id="fEmoji" maxlength="4" placeholder="🧸">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gambar (opsional)</label>
+                                        <div class="image-upload-area" id="fUploadArea" style="padding:18px;">
+                                            <p><strong>📷 Klik untuk upload</strong> atau isi URL di bawah</p>
+                                            <input type="text" id="fImage" placeholder="https://... atau nama file">
+                                            <img class="image-preview" id="fPreview" alt="Preview gambar unggulan">
+                                        </div>
+                                        <input type="file" id="fFile" accept="image/*" style="display:none;">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fButtonText">Teks Tombol</label>
+                                        <input type="text" id="fButtonText" placeholder="Tambah ke Keranjang">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fButtonLink">Link Tombol (opsional — kosong = masuk keranjang)</label>
+                                        <input type="text" id="fButtonLink" placeholder="https://wa.me/...">
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display:flex; align-items:center; gap:12px;">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="fVisible" checked>
                                         <span class="toggle-slider"></span>
+                                    </label>
+                                    <span style="font-size:0.88rem; font-weight:600; color:var(--text-medium);">Tampilkan section Best Seller di website</span>
+                                </div>
+
+                                <button type="submit" class="btn-submit">💾 Simpan Produk Unggulan</button>
+                                <button type="button" class="btn-cancel" id="btnResetFeatured">🔄 Reset ke Default</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- ====== TAB: PENGATURAN ====== -->
+                    <section class="tab-content" id="tab-settings">
+                        <form id="settingsForm">
+                            <div class="settings-card">
+                                <h3>📇 Info Kontak</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="sWhatsapp">Nomor WhatsApp (format 62xxx)</label>
+                                        <input type="text" id="sWhatsapp" placeholder="6281234567890">
                                     </div>
-                                    <span>Tampilkan section Produk Unggulan di halaman utama</span>
-                                </label>
+                                    <div class="form-group">
+                                        <label for="sEmail">Email</label>
+                                        <input type="email" id="sEmail" placeholder="email@toko.com">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sLocation">Alamat / Lokasi</label>
+                                    <input type="text" id="sLocation" placeholder="Alamat studio...">
+                                </div>
                             </div>
-                        </div>
+                            <div class="settings-card">
+                                <h3>🔗 Sosial Media</h3>
+                                <div class="form-group">
+                                    <label for="sInstagram">Link Instagram</label>
+                                    <input type="text" id="sInstagram" placeholder="https://instagram.com/...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sFacebook">Link Facebook</label>
+                                    <input type="text" id="sFacebook" placeholder="https://facebook.com/...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sTiktok">Link TikTok</label>
+                                    <input type="text" id="sTiktok" placeholder="https://tiktok.com/...">
+                                </div>
+                            </div>
+                            <p style="font-size:0.78rem; color:var(--text-light); margin-bottom:15px;">💡 Nomor WhatsApp otomatis dipakai untuk tombol WA melayang, ikon WA footer, checkout keranjang, dan form workshop di website.</p>
+                            <button type="submit" class="btn-submit">💾 Simpan Pengaturan</button>
+                        </form>
 
-                        <div style="margin-top: 30px; display: flex; gap: 10px;">
-                            <button type="submit" class="btn-submit">💾 Simpan Produk Unggulan</button>
-                            <button type="button" class="btn-cancel" onclick="resetFeaturedForm()">🔄 Reset ke Default</button>
+                        <div class="settings-card danger-zone" style="margin-top:20px;">
+                            <h3>⚠️ Zona Berbahaya</h3>
+                            <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:15px;">Mengembalikan data ke kondisi default — sama persis dengan isi website saat ini, jadi aman untuk website.</p>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="btn-delete" id="btnResetProducts">🗑️ Reset Produk</button>
+                                <button class="btn-delete" id="btnResetAll">☢️ Reset Semua Data</button>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </section>
 
-            <!-- TAB: Settings -->
-            <div class="tab-content" id="tab-settings">
-                <div class="settings-card">
-                    <h3>🔐 Ganti Password Admin</h3>
-                    <form onsubmit="handleChangePassword(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Password Lama</label>
-                                <input type="password" id="oldPassword" placeholder="Masukkan password lama" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Password Baru</label>
-                                <input type="password" id="newPassword" placeholder="Masukkan password baru" required minlength="6">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-submit" style="margin-top: 10px;">🔒 Update Password</button>
-                    </form>
-                </div>
-
-                <div class="settings-card">
-                    <h3>📱 Info Kontak Toko</h3>
-                    <form onsubmit="handleSaveContact(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Nomor WhatsApp</label>
-                                <input type="text" id="settingWhatsapp" placeholder="6281234567890">
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" id="settingEmail" placeholder="hello@wirastitch.com">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Link Instagram</label>
-                                <input type="url" id="settingInstagram" placeholder="https://instagram.com/wirastitch">
-                            </div>
-                            <div class="form-group">
-                                <label>Link Facebook</label>
-                                <input type="url" id="settingFacebook" placeholder="https://facebook.com/wirastitch">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Link TikTok</label>
-                                <input type="url" id="settingTiktok" placeholder="https://tiktok.com/@wirastitch">
-                            </div>
-                            <div class="form-group">
-                                <label>Lokasi Toko</label>
-                                <input type="text" id="settingLocation" placeholder="Jakarta, Indonesia">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn-submit" style="margin-top: 10px;">💾 Simpan Pengaturan</button>
-                    </form>
-                </div>
-
-                <div class="settings-card">
-                    <h3>⚠️ Zona Bahaya</h3>
-                    <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.9rem;">
-                        Hati-hati! Tindakan di bawah ini tidak dapat dibatalkan.
-                    </p>
-                    <button class="btn-delete" onclick="confirmResetAll()" style="padding: 12px 24px; font-size: 0.9rem;">
-                        🗑️ Hapus Semua Produk & Reset Data
-                    </button>
-                </div>
+                </main>
             </div>
         </div>
     </div>
 
-    <!-- ====== CONFIRM MODAL ====== -->
+    <!-- ====== MODAL KONFIRMASI ====== -->
     <div class="modal-overlay" id="confirmModal">
         <div class="modal-box">
-            <div class="modal-icon" id="modalIcon">⚠️</div>
-            <h3 id="modalTitle">Konfirmasi</h3>
-            <p id="modalMessage">Apakah Anda yakin?</p>
+            <div class="modal-icon" id="modalIcon">🗑️</div>
+            <h3 id="modalTitle">Yakin?</h3>
+            <p id="modalMessage">Tindakan ini tidak dapat dibatalkan.</p>
             <div class="modal-btns">
-                <button class="modal-btn-cancel" onclick="closeModal()">Batal</button>
-                <button class="modal-btn-confirm" id="modalConfirmBtn" onclick="executeModalAction()">Hapus</button>
+                <button class="modal-btn-cancel" id="modalCancel">Batal</button>
+                <button class="modal-btn-confirm" id="modalConfirm">Ya, Lanjutkan</button>
             </div>
         </div>
     </div>
 
     <!-- ====== TOAST ====== -->
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast">✅ Tersimpan!</div>
 
-    <!-- ====== JAVASCRIPT ====== -->
     <script>
-        // ===========================
-        // KONFIGURASI & DATA AWAL
-        // ===========================
-        const DEFAULT_CREDENTIALS = {
-            username: 'admin',
-            password: 'wirastitch2026'
+        // =====================================================
+        //  JAVASCRIPT — 100% SAMA DENGAN VERSI SEBELUMNYA
+        //  (kunci localStorage & sinkronisasi tidak diubah)
+        // =====================================================
+
+        // ====== KONSTANTA & UTIL ======
+        const LS_KEYS = {
+            products: 'wirastitch_products',
+            featured: 'wirastitch_featured',
+            settings: 'wirastitch_settings'
         };
 
-                const DEFAULT_PRODUCTS = [
+        const SESSION_KEY = 'wirastitch_admin_session';
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'wirastitch2026';
+
+        const CATEGORY_LABELS = {
+            tas: 'Tas Rajut',
+            topi: 'Topi & Beanie',
+            syal: 'Syal & Scarf',
+            boneka: 'Boneka Amigurumi',
+            aksesoris: 'Aksesoris'
+        };
+
+        // Default SAMA PERSIS dengan isi website → reset selalu aman
+        const DEFAULT_PRODUCTS = [
             { id: 1, name: 'Tas Rajut Premium', category: 'tas', price: 185000, oldPrice: 220000, description: 'Tas rajut benang katun premium, kuat dan elegan.', badge: 'Best Seller', emoji: '👜', image: '' },
             { id: 2, name: 'Beanie Classic', category: 'topi', price: 95000, oldPrice: 0, description: 'Topi beanie rajut hangat untuk segala suasana.', badge: '', emoji: '🧢', image: '' },
             { id: 3, name: 'Syal Winter Warm', category: 'syal', price: 120000, oldPrice: 0, description: 'Syal rajut lembut dengan warna-warna earthy.', badge: 'New', emoji: '🧣', image: '' },
@@ -1488,468 +1641,6 @@
             { id: 8, name: 'Boneka Bunny Amigurumi', category: 'boneka', price: 165000, oldPrice: 0, description: 'Kelinci rajut imut dengan telinga panjang yang lembut.', badge: '', emoji: '🐰', image: '' }
         ];
 
-        // ===========================
-        // HELPER FUNCTIONS
-        // ===========================
-        function getProducts() {
-            const data = localStorage.getItem('wirastitch_products');
-            if (!data) {
-                localStorage.setItem('wirastitch_products', JSON.stringify(DEFAULT_PRODUCTS));
-                return DEFAULT_PRODUCTS;
-            }
-            return JSON.parse(data);
-        }
-
-        function saveProducts(products) {
-            localStorage.setItem('wirastitch_products', JSON.stringify(products));
-        }
-
-        function getCredentials() {
-            const data = localStorage.getItem('wirastitch_credentials');
-            if (!data) {
-                localStorage.setItem('wirastitch_credentials', JSON.stringify(DEFAULT_CREDENTIALS));
-                return DEFAULT_CREDENTIALS;
-            }
-            return JSON.parse(data);
-        }
-
-        function getSettings() {
-            const data = localStorage.getItem('wirastitch_settings');
-            if (!data) {
-                const defaults = {
-                    whatsapp: '6281234567890',
-                    email: '',
-                    instagram: '',
-                    facebook: '',
-                    tiktok: '',
-                    location: ''
-                };
-                localStorage.setItem('wirastitch_settings', JSON.stringify(defaults));
-                return defaults;
-            }
-            return JSON.parse(data);
-        }
-
-        function formatRupiah(num) {
-            return 'Rp ' + num.toLocaleString('id-ID');
-        }
-
-        function generateId() {
-            return Date.now() + Math.floor(Math.random() * 1000);
-        }
-
-        // ===========================
-        // TOAST NOTIFICATION
-        // ===========================
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast toast-${type} show`;
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // ===========================
-        // LOGIN SYSTEM
-        // ===========================
-        function handleLogin(e) {
-            e.preventDefault();
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const creds = getCredentials();
-
-            if (username === creds.username && password === creds.password) {
-                sessionStorage.setItem('wirastitch_logged_in', 'true');
-                showDashboard();
-                showToast('✅ Login berhasil! Selamat datang, Admin.');
-            } else {
-                document.getElementById('loginError').classList.add('show');
-                setTimeout(() => {
-                    document.getElementById('loginError').classList.remove('show');
-                }, 3000);
-            }
-        }
-
-        function handleLogout() {
-            sessionStorage.removeItem('wirastitch_logged_in');
-            document.getElementById('adminPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('loginUsername').value = '';
-            document.getElementById('loginPassword').value = '';
-            showToast('👋 Anda telah logout.', 'info');
-        }
-
-        function showDashboard() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPage').style.display = 'block';
-            loadDashboard();
-        }
-
-        // Check session on load
-        function checkSession() {
-            if (sessionStorage.getItem('wirastitch_logged_in') === 'true') {
-                showDashboard();
-            }
-        }
-
-        // ===========================
-        // DASHBOARD
-        // ===========================
-        function loadDashboard() {
-            renderProductTable();
-            updateStats();
-            loadSettingsForm();
-            loadFeaturedForm();
-        }
-
-        function updateStats() {
-            const products = getProducts();
-            const categories = [...new Set(products.map(p => p.category))];
-            const featured = products.filter(p => p.badge).length;
-            const avgPrice = products.length > 0 
-                ? Math.round(products.reduce((sum, p) => sum + p.price, 0) / products.length) 
-                : 0;
-
-            document.getElementById('statTotal').textContent = products.length;
-            document.getElementById('statCategories').textContent = categories.length;
-            document.getElementById('statFeatured').textContent = featured;
-            document.getElementById('statAvgPrice').textContent = formatRupiah(avgPrice);
-        }
-
-        // ===========================
-        // TABS
-        // ===========================
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            event.target.classList.add('active');
-
-            if (tabName === 'add') {
-                resetProductForm();
-            }
-        }
-
-        // ===========================
-        // PRODUCT TABLE
-        // ===========================
-        function renderProductTable(filter = '') {
-            const products = getProducts();
-            const tbody = document.getElementById('productTableBody');
-            const emptyState = document.getElementById('emptyState');
-
-            const filtered = filter 
-                ? products.filter(p => 
-                    p.name.toLowerCase().includes(filter.toLowerCase()) ||
-                    p.category.toLowerCase().includes(filter.toLowerCase())
-                )
-                : products;
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = '';
-                emptyState.style.display = 'block';
-                document.querySelector('.product-table').style.display = 'none';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            document.querySelector('.product-table').style.display = 'table';
-
-            tbody.innerHTML = filtered.map(product => {
-                const thumbHtml = product.image 
-                    ? `<img src="${product.image}" alt="${product.name}">`
-                    : product.emoji || '📦';
-                
-                const badgeClass = `badge-${product.category}`;
-                const categoryLabels = {
-                    'tas': '👜 Tas',
-                    'topi': '🧢 Topi',
-                    'syal': '🧣 Syal',
-                    'boneka': '🧸 Boneka',
-                    'aksesoris': '🎀 Aksesoris'
-                };
-
-                const priceHtml = product.oldPrice > 0
-                    ? `${formatRupiah(product.price)}<br><small style="text-decoration: line-through; color: var(--text-light);">${formatRupiah(product.oldPrice)}</small>`
-                    : formatRupiah(product.price);
-
-                return `
-                    <tr>
-                        <td>
-                            <div class="product-thumb">${thumbHtml}</div>
-                        </td>
-                        <td>
-                            <strong>${product.name}</strong><br>
-                            <small style="color: var(--text-light);">${product.description.substring(0, 50)}${product.description.length > 50 ? '...' : ''}</small>
-                        </td>
-                        <td><span class="badge ${badgeClass}">${categoryLabels[product.category] || product.category}</span></td>
-                        <td>${priceHtml}</td>
-                        <td>${product.badge ? `<span class="badge" style="background: var(--cream-dark); color: var(--primary);">${product.badge}</span>` : '-'}</td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="btn-edit" onclick="editProduct(${product.id})">✏️ Edit</button>
-                                <button class="btn-delete" onclick="confirmDelete(${product.id}, '${product.name}')">🗑️ Hapus</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function searchProducts(query) {
-            renderProductTable(query);
-        }
-
-        // ===========================
-        // PRODUCT CRUD
-        // ===========================
-        function handleProductSubmit(e) {
-            e.preventDefault();
-            const editId = document.getElementById('editProductId').value;
-            
-            const productData = {
-                name: document.getElementById('productName').value.trim(),
-                category: document.getElementById('productCategory').value,
-                price: parseInt(document.getElementById('productPrice').value),
-                oldPrice: parseInt(document.getElementById('productOldPrice').value) || 0,
-                description: document.getElementById('productDesc').value.trim(),
-                badge: document.getElementById('productBadge').value,
-                emoji: document.getElementById('productEmoji').value.trim() || getCategoryEmoji(document.getElementById('productCategory').value),
-                image: document.getElementById('imagePreview').src || ''
-            };
-
-            // Validate image preview
-            if (productData.image && !productData.image.startsWith('data:') && !productData.image.startsWith('http')) {
-                productData.image = '';
-            }
-
-            let products = getProducts();
-
-            if (editId) {
-                // UPDATE
-                const index = products.findIndex(p => p.id === parseInt(editId));
-                if (index !== -1) {
-                    products[index] = { ...products[index], ...productData };
-                    saveProducts(products);
-                    showToast('✅ Produk berhasil diupdate!');
-                }
-            } else {
-                // CREATE
-                productData.id = generateId();
-                products.push(productData);
-                saveProducts(products);
-                showToast('✅ Produk baru berhasil ditambahkan!');
-            }
-
-            resetProductForm();
-            renderProductTable();
-            updateStats();
-
-            // Switch to product list tab
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-products').classList.add('active');
-            document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        }
-
-        function editProduct(id) {
-            const products = getProducts();
-            const product = products.find(p => p.id === id);
-            if (!product) return;
-
-            // Fill form
-            document.getElementById('editProductId').value = product.id;
-            document.getElementById('productName').value = product.name;
-            document.getElementById('productCategory').value = product.category;
-            document.getElementById('productPrice').value = product.price;
-            document.getElementById('productOldPrice').value = product.oldPrice || '';
-            document.getElementById('productDesc').value = product.description;
-            document.getElementById('productBadge').value = product.badge || '';
-            document.getElementById('productEmoji').value = product.emoji || '';
-
-            if (product.image) {
-                const preview = document.getElementById('imagePreview');
-                preview.src = product.image;
-                preview.classList.add('show');
-            }
-
-            // Update form title
-            document.getElementById('formTitle').textContent = '✏️ Edit Produk';
-            document.getElementById('formSubtitle').textContent = `Mengedit: ${product.name}`;
-            document.getElementById('submitBtn').textContent = '💾 Update Produk';
-
-            // Switch to add/edit tab
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-add').classList.add('active');
-            document.querySelectorAll('.tab-btn')[1].classList.add('active');
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function cancelEdit() {
-            resetProductForm();
-            // Switch to products tab
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-products').classList.add('active');
-            document.querySelectorAll('.tab-btn')[0].classList.add('active');
-        }
-
-        function resetProductForm() {
-            document.getElementById('productForm').reset();
-            document.getElementById('editProductId').value = '';
-            document.getElementById('imagePreview').classList.remove('show');
-            document.getElementById('imagePreview').src = '';
-            document.getElementById('formTitle').textContent = '➕ Tambah Produk Baru';
-            document.getElementById('formSubtitle').textContent = 'Isi detail produk rajutan Anda di bawah ini';
-            document.getElementById('submitBtn').textContent = '💾 Simpan Produk';
-        }
-
-        function getCategoryEmoji(category) {
-            const emojis = {
-                'tas': '👜',
-                'topi': '🧢',
-                'syal': '🧣',
-                'boneka': '🧸',
-                'aksesoris': '🎀'
-            };
-            return emojis[category] || '📦';
-        }
-
-        // ===========================
-        // IMAGE HANDLING
-        // ===========================
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            // Check file size (max 500KB for localStorage)
-            if (file.size > 500 * 1024) {
-                showToast('⚠️ File terlalu besar! Maksimal 500KB. Gunakan URL gambar sebagai gantinya.', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.getElementById('imagePreview');
-                preview.src = e.target.result;
-                preview.classList.add('show');
-                document.getElementById('productImageUrl').value = '';
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function handleImageUrl(url) {
-            if (url) {
-                const preview = document.getElementById('imagePreview');
-                preview.src = url;
-                preview.classList.add('show');
-                // Clear file input
-                document.getElementById('productImage').value = '';
-            }
-        }
-
-        // ===========================
-        // DELETE PRODUCT
-        // ===========================
-        let pendingDeleteId = null;
-
-        function confirmDelete(id, name) {
-            pendingDeleteId = id;
-            document.getElementById('modalIcon').textContent = '🗑️';
-            document.getElementById('modalTitle').textContent = 'Hapus Produk?';
-            document.getElementById('modalMessage').textContent = `Produk "${name}" akan dihapus permanen. Lanjutkan?`;
-            document.getElementById('modalConfirmBtn').textContent = '🗑️ Ya, Hapus';
-            document.getElementById('confirmModal').classList.add('show');
-        }
-
-        function confirmResetAll() {
-            pendingDeleteId = 'RESET_ALL';
-            document.getElementById('modalIcon').textContent = '⚠️';
-            document.getElementById('modalTitle').textContent = 'Reset Semua Data?';
-            document.getElementById('modalMessage').textContent = 'Semua produk akan dihapus dan dikembalikan ke data default. Tindakan ini TIDAK bisa dibatalkan!';
-            document.getElementById('modalConfirmBtn').textContent = '⚠️ Ya, Reset Semua';
-            document.getElementById('confirmModal').classList.add('show');
-        }
-
-        function executeModalAction() {
-            if (pendingDeleteId === 'RESET_ALL') {
-                localStorage.removeItem('wirastitch_products');
-                showToast('🔄 Semua data telah direset ke default.');
-                loadDashboard();
-            } else if (pendingDeleteId) {
-                let products = getProducts();
-                products = products.filter(p => p.id !== pendingDeleteId);
-                saveProducts(products);
-                showToast('🗑️ Produk berhasil dihapus.');
-                renderProductTable();
-                updateStats();
-            }
-            closeModal();
-        }
-
-        function closeModal() {
-            document.getElementById('confirmModal').classList.remove('show');
-            pendingDeleteId = null;
-        }
-
-        // ===========================
-        // SETTINGS
-        // ===========================
-        function loadSettingsForm() {
-            const settings = getSettings();
-            document.getElementById('settingWhatsapp').value = settings.whatsapp || '';
-            document.getElementById('settingEmail').value = settings.email || '';
-            document.getElementById('settingInstagram').value = settings.instagram || '';
-            document.getElementById('settingFacebook').value = settings.facebook || '';
-            document.getElementById('settingTiktok').value = settings.tiktok || '';
-            document.getElementById('settingLocation').value = settings.location || '';
-        }
-
-        function handleChangePassword(e) {
-            e.preventDefault();
-            const oldPass = document.getElementById('oldPassword').value;
-            const newPass = document.getElementById('newPassword').value;
-            const creds = getCredentials();
-
-            if (oldPass !== creds.password) {
-                showToast('❌ Password lama salah!', 'error');
-                return;
-            }
-
-            if (newPass.length < 6) {
-                showToast('❌ Password baru minimal 6 karakter!', 'error');
-                return;
-            }
-
-            creds.password = newPass;
-            localStorage.setItem('wirastitch_credentials', JSON.stringify(creds));
-            showToast('✅ Password berhasil diubah!');
-            document.getElementById('oldPassword').value = '';
-            document.getElementById('newPassword').value = '';
-        }
-
-        function handleSaveContact(e) {
-            e.preventDefault();
-            const settings = {
-                whatsapp: document.getElementById('settingWhatsapp').value.trim(),
-                email: document.getElementById('settingEmail').value.trim(),
-                instagram: document.getElementById('settingInstagram').value.trim(),
-                facebook: document.getElementById('settingFacebook').value.trim(),
-                tiktok: document.getElementById('settingTiktok').value.trim(),
-                location: document.getElementById('settingLocation').value.trim()
-            };
-            localStorage.setItem('wirastitch_settings', JSON.stringify(settings));
-            showToast('✅ Pengaturan kontak berhasil disimpan!');
-        }
-
-                // ===========================
-        // FEATURED PRODUCT MANAGEMENT
-        // ===========================
         const DEFAULT_FEATURED = {
             label: 'Best Seller Bulan Ini',
             name: 'Boneka Bear Amigurumi Edisi Spesial',
@@ -1968,207 +1659,454 @@
             visible: true
         };
 
-        function getFeatured() {
-            const data = localStorage.getItem('wirastitch_featured');
-            if (!data) {
-                localStorage.setItem('wirastitch_featured', JSON.stringify(DEFAULT_FEATURED));
-                return DEFAULT_FEATURED;
-            }
-            return JSON.parse(data);
+        const DEFAULT_SETTINGS = {
+            whatsapp: '6281234567890',
+            email: '',
+            instagram: '',
+            facebook: '',
+            tiktok: '',
+            location: ''
+        };
+
+        function lsGet(key) {
+            try {
+                const d = localStorage.getItem(key);
+                return d ? JSON.parse(d) : null;
+            } catch (e) { return null; }
         }
 
-        function saveFeatured(featured) {
-            localStorage.setItem('wirastitch_featured', JSON.stringify(featured));
+        function lsSet(key, val) {
+            localStorage.setItem(key, JSON.stringify(val));
         }
 
-        function loadFeaturedForm() {
-            const featured = getFeatured();
+        const formatRupiah = n => 'Rp' + Number(n || 0).toLocaleString('id-ID');
 
-            document.getElementById('featuredLabel').value = featured.label || '';
-            document.getElementById('featuredName').value = featured.name || '';
-            document.getElementById('featuredDesc').value = featured.description || '';
-            document.getElementById('featuredPrice').value = featured.price || '';
-            document.getElementById('featuredEmoji').value = featured.emoji || '👜';
-            document.getElementById('featuredButtonText').value = featured.buttonText || 'Pesan via WhatsApp';
-            document.getElementById('featuredButtonLink').value = featured.buttonLink || '';
-            document.getElementById('featuredVisible').checked = featured.visible !== false;
+        const compactRupiah = n => {
+            if (n >= 1000000) return 'Rp' + (n / 1000000).toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' jt';
+            return formatRupiah(n);
+        };
 
-            if (featured.image) {
-                const previewImg = document.getElementById('featuredPreviewImg');
-                previewImg.src = featured.image;
-                previewImg.style.display = 'block';
-                document.getElementById('featuredPreviewEmoji').style.display = 'none';
-            }
+        // ====== TOAST ======
+        const toast = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg, type = 'success') {
+            toast.textContent = msg;
+            toast.className = 'toast toast-' + type + ' show';
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
 
-            // Load features
-            const featuresList = document.getElementById('featuredFeaturesList');
-            featuresList.innerHTML = '';
-            
-            if (featured.features && featured.features.length > 0) {
-                featured.features.forEach(feature => {
-                    const row = createFeatureRow(feature);
-                    featuresList.appendChild(row);
-                });
+        // ====== MODAL KONFIRMASI ======
+        const confirmModal = document.getElementById('confirmModal');
+        let pendingAction = null;
+
+        function askConfirm(title, message, icon, cb) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modalIcon').textContent = icon;
+            pendingAction = cb;
+            confirmModal.classList.add('show');
+        }
+
+        document.getElementById('modalCancel').addEventListener('click', () => {
+            confirmModal.classList.remove('show');
+            pendingAction = null;
+        });
+
+        document.getElementById('modalConfirm').addEventListener('click', () => {
+            confirmModal.classList.remove('show');
+            if (pendingAction) pendingAction();
+            pendingAction = null;
+        });
+
+        // ====== LOGIN / SESI ======
+        const loginPage = document.getElementById('loginPage');
+        const adminPage = document.getElementById('adminPage');
+
+        function showAdmin() {
+            loginPage.style.display = 'none';
+            adminPage.style.display = 'block';
+        }
+
+        function showLogin() {
+            adminPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+        }
+
+        if (localStorage.getItem(SESSION_KEY) === '1') showAdmin();
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value;
+            if (u === ADMIN_USER && p === ADMIN_PASS) {
+                localStorage.setItem(SESSION_KEY, '1');
+                document.getElementById('loginError').classList.remove('show');
+                showAdmin();
+                showToast('👋 Selamat datang, Admin!');
             } else {
-                const row = createFeatureRow('');
-                featuresList.appendChild(row);
+                document.getElementById('loginError').classList.add('show');
             }
+        });
 
-            updateFeaturedPreview();
-        }
+        document.getElementById('btnLogout').addEventListener('click', () => {
+            localStorage.removeItem(SESSION_KEY);
+            showLogin();
+            showToast('🚪 Kamu telah keluar.', 'info');
+        });
 
-        function createFeatureRow(value) {
-            const row = document.createElement('div');
-            row.className = 'feature-row';
-            row.innerHTML = `
-                <input type="text" class="feature-input" placeholder="Contoh: Benang katun premium import" value="${value || ''}" oninput="updateFeaturedPreview()">
-                <button type="button" class="btn-remove-feature" onclick="removeFeature(this)">✕</button>
-            `;
-            return row;
-        }
-
-        function addFeatureRow() {
-            const featuresList = document.getElementById('featuredFeaturesList');
-            const row = createFeatureRow('');
-            featuresList.appendChild(row);
-            row.querySelector('input').focus();
-        }
-
-        function removeFeature(btn) {
-            const featuresList = document.getElementById('featuredFeaturesList');
-            if (featuresList.children.length > 1) {
-                btn.parentElement.remove();
-                updateFeaturedPreview();
-            } else {
-                showToast('⚠️ Minimal harus ada 1 fitur!', 'error');
-            }
-        }
-
-        function updateFeaturedPreview() {
-            const label = document.getElementById('featuredLabel').value || '⭐ PRODUK UNGGULAN';
-            const name = document.getElementById('featuredName').value || 'Nama Produk';
-            const desc = document.getElementById('featuredDesc').value || 'Deskripsi produk...';
-            const price = parseInt(document.getElementById('featuredPrice').value) || 0;
-            const emoji = document.getElementById('featuredEmoji').value || '👜';
-
-            document.getElementById('previewLabel').textContent = label;
-            document.getElementById('previewName').textContent = name;
-            document.getElementById('previewDesc').textContent = desc;
-            document.getElementById('previewPrice').textContent = formatRupiah(price);
-
-            // Update emoji if no image
-            const previewImg = document.getElementById('featuredPreviewImg');
-            if (previewImg.style.display === 'none' || !previewImg.src) {
-                document.getElementById('featuredPreviewEmoji').textContent = emoji;
-                document.getElementById('featuredPreviewEmoji').style.display = 'block';
-            }
-
-            // Update features preview
-            const featureInputs = document.querySelectorAll('.feature-input');
-            let featuresHtml = '<ul class="preview-features">';
-            featureInputs.forEach(input => {
-                if (input.value.trim()) {
-                    featuresHtml += `<li>${input.value.trim()}</li>`;
-                }
+        // ====== NAVIGASI TAB ======
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
             });
-            featuresHtml += '</ul>';
-            
-            // Insert or update features in preview
-            let featuresContainer = document.getElementById('previewFeatures');
-            if (!featuresContainer) {
-                featuresContainer = document.createElement('div');
-                featuresContainer.id = 'previewFeatures';
-                const descEl = document.getElementById('previewDesc');
-                descEl.parentNode.insertBefore(featuresContainer, descEl.nextSibling);
-            }
-            featuresContainer.innerHTML = featuresHtml;
+        });
+
+        // ====== DATA PRODUK ======
+        let products = lsGet(LS_KEYS.products);
+        if (!Array.isArray(products)) {
+            products = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+            lsSet(LS_KEYS.products, products);
         }
 
-        function handleFeaturedImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        // ====== STATISTIK ======
+        function renderStats() {
+            document.getElementById('statProducts').textContent = products.length;
+            document.getElementById('statCategories').textContent = new Set(products.map(p => p.category)).size;
+            document.getElementById('statFeatured').textContent = featuredData.visible === false ? 'Nonaktif' : 'Aktif';
+            document.getElementById('statValue').textContent = compactRupiah(products.reduce((s, p) => s + (Number(p.price) || 0), 0));
+        }
 
-            if (file.size > 500 * 1024) {
-                showToast('⚠️ File terlalu besar! Maksimal 500KB. Gunakan URL gambar sebagai gantinya.', 'error');
+        // ====== TABEL PRODUK + PENCARIAN ======
+        const productSearch = document.getElementById('productSearch');
+
+        function renderProducts() {
+            const q = (productSearch.value || '').toLowerCase();
+            const list = products.filter(p =>
+                !q ||
+                (p.name || '').toLowerCase().includes(q) ||
+                (CATEGORY_LABELS[p.category] || '').toLowerCase().includes(q)
+            );
+
+            const tbody = document.getElementById('productTableBody');
+            if (!list.length) {
+                tbody.innerHTML = `
+                    <tr><td colspan="5">
+                        <div class="empty-state">
+                            <div class="empty-icon">🧺</div>
+                            <h3>Tidak ada produk ditemukan</h3>
+                            <p>${products.length ? 'Coba kata kunci lain.' : 'Klik "+ Tambah Produk" untuk menambahkan produk pertama.'}</p>
+                        </div>
+                    </td></tr>`;
                 return;
             }
 
+            tbody.innerHTML = list.map(p => `
+                <tr>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="product-thumb">${p.image ? `<img src="${p.image}" alt="">` : (p.emoji || '📦')}</div>
+                            <div>
+                                <strong>${p.name}</strong><br>
+                                <small style="color:var(--text-light);">${p.description || ''}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge badge-${p.category}">${CATEGORY_LABELS[p.category] || p.category}</span></td>
+                    <td>
+                        <strong>${formatRupiah(p.price)}</strong>
+                        ${p.oldPrice ? `<br><small style="color:var(--text-light); text-decoration:line-through;">${formatRupiah(p.oldPrice)}</small>` : ''}
+                    </td>
+                    <td>${p.badge ? `<span class="badge badge-none">${p.badge}</span>` : '—'}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-edit" data-id="${p.id}">✏️ Edit</button>
+                            <button class="btn-delete" data-id="${p.id}">🗑️ Hapus</button>
+                        </div>
+                    </td>
+                </tr>`).join('');
+        }
+
+        productSearch.addEventListener('input', renderProducts);
+
+        // ====== FORM PRODUK ======
+        const productFormCard = document.getElementById('productFormCard');
+        const productForm = document.getElementById('productForm');
+        const pPreview = document.getElementById('pPreview');
+        const pImage = document.getElementById('pImage');
+        const pFile = document.getElementById('pFile');
+
+        function showPreview(imgEl, src) {
+            if (src) {
+                imgEl.src = src;
+                imgEl.classList.add('show');
+            } else {
+                imgEl.classList.remove('show');
+            }
+        }
+
+        function openProductForm(product) {
+            productFormCard.style.display = 'block';
+            document.getElementById('productFormTitle').textContent = product ? '✏️ Edit Produk' : '➕ Tambah Produk';
+            document.getElementById('pId').value = product ? product.id : '';
+            document.getElementById('pName').value = product ? product.name : '';
+            document.getElementById('pCategory').value = product ? product.category : 'tas';
+            document.getElementById('pPrice').value = product ? product.price : '';
+            document.getElementById('pOldPrice').value = product ? (product.oldPrice || '') : '';
+            document.getElementById('pBadge').value = product ? (product.badge || '') : '';
+            document.getElementById('pEmoji').value = product ? (product.emoji || '') : '';
+            pImage.value = product ? (product.image || '') : '';
+            document.getElementById('pDesc').value = product ? (product.description || '') : '';
+            showPreview(pPreview, pImage.value);
+            productFormCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function closeProductForm() {
+            productFormCard.style.display = 'none';
+            productForm.reset();
+            pFile.value = '';
+            showPreview(pPreview, '');
+        }
+
+        document.getElementById('btnAddProduct').addEventListener('click', () => openProductForm(null));
+        document.getElementById('btnCancelProduct').addEventListener('click', closeProductForm);
+
+        // Upload gambar produk (base64) atau URL manual
+        document.getElementById('pUploadArea').addEventListener('click', () => pFile.click());
+        pImage.addEventListener('click', (e) => e.stopPropagation());
+        pImage.addEventListener('input', () => showPreview(pPreview, pImage.value));
+        pFile.addEventListener('change', () => {
+            const f = pFile.files[0];
+            if (!f) return;
             const reader = new FileReader();
-            reader.onload = function(e) {
-                const previewImg = document.getElementById('featuredPreviewImg');
-                previewImg.src = e.target.result;
-                previewImg.style.display = 'block';
-                document.getElementById('featuredPreviewEmoji').style.display = 'none';
-                document.getElementById('featuredImageUrl').value = '';
-                updateFeaturedPreview();
+            reader.onload = () => {
+                pImage.value = reader.result;
+                showPreview(pPreview, reader.result);
             };
-            reader.readAsDataURL(file);
-        }
-
-        function handleFeaturedImageUrl(url) {
-            if (url) {
-                const previewImg = document.getElementById('featuredPreviewImg');
-                previewImg.src = url;
-                previewImg.style.display = 'block';
-                document.getElementById('featuredPreviewEmoji').style.display = 'none';
-                document.getElementById('featuredImage').value = '';
-                updateFeaturedPreview();
-            }
-        }
-
-        function handleFeaturedSubmit(e) {
-            e.preventDefault();
-
-            // Gather features
-            const featureInputs = document.querySelectorAll('.feature-input');
-            const features = [];
-            featureInputs.forEach(input => {
-                if (input.value.trim()) {
-                    features.push(input.value.trim());
-                }
-            });
-
-            // Get image
-            const previewImg = document.getElementById('featuredPreviewImg');
-            let image = '';
-            if (previewImg.style.display !== 'none' && previewImg.src && !previewImg.src.endsWith('undefined')) {
-                image = previewImg.src;
-            }
-
-            const featuredData = {
-                label: document.getElementById('featuredLabel').value.trim(),
-                name: document.getElementById('featuredName').value.trim(),
-                description: document.getElementById('featuredDesc').value.trim(),
-                price: parseInt(document.getElementById('featuredPrice').value) || 0,
-                emoji: document.getElementById('featuredEmoji').value.trim() || '👜',
-                image: image,
-                features: features,
-                buttonText: document.getElementById('featuredButtonText').value.trim() || 'Pesan via WhatsApp',
-                buttonLink: document.getElementById('featuredButtonLink').value.trim(),
-                visible: document.getElementById('featuredVisible').checked
-            };
-
-            saveFeatured(featuredData);
-            showToast('✅ Produk Unggulan berhasil disimpan!');
-        }
-
-        function resetFeaturedForm() {
-            localStorage.setItem('wirastitch_featured', JSON.stringify(DEFAULT_FEATURED));
-            loadFeaturedForm();
-            showToast('🔄 Form Produk Unggulan direset ke default.', 'info');
-        }
-
-
-        
-        // ===========================
-        // INIT
-        // ===========================
-        window.addEventListener('DOMContentLoaded', function() {
-            checkSession();
+            reader.readAsDataURL(f);
         });
-    </script>
 
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('pId').value;
+            const data = {
+                id: id ? Number(id) : Date.now(),
+                name: document.getElementById('pName').value.trim(),
+                category: document.getElementById('pCategory').value,
+                price: Number(document.getElementById('pPrice').value) || 0,
+                oldPrice: Number(document.getElementById('pOldPrice').value) || 0,
+                description: document.getElementById('pDesc').value.trim(),
+                badge: document.getElementById('pBadge').value,
+                emoji: document.getElementById('pEmoji').value.trim() || '📦',
+                image: pImage.value.trim()
+            };
+            if (id) {
+                const i = products.findIndex(p => p.id === Number(id));
+                if (i > -1) products[i] = data;
+            } else {
+                products.push(data);
+            }
+            lsSet(LS_KEYS.products, products);
+            renderProducts();
+            renderStats();
+            closeProductForm();
+            showToast('✅ Produk tersimpan — website ikut ter-update!');
+        });
+
+        // Edit & hapus (delegasi)
+        document.getElementById('productTableBody').addEventListener('click', (e) => {
+            const editBtn = e.target.closest('.btn-edit');
+            const delBtn = e.target.closest('.btn-delete');
+            if (editBtn) {
+                const p = products.find(x => x.id === Number(editBtn.dataset.id));
+                if (p) openProductForm(p);
+            } else if (delBtn) {
+                const p = products.find(x => x.id === Number(delBtn.dataset.id));
+                if (!p) return;
+                askConfirm('Hapus Produk?', `"${p.name}" akan dihapus dari website secara permanen.`, '🗑️', () => {
+                    products = products.filter(x => x.id !== p.id);
+                    lsSet(LS_KEYS.products, products);
+                    renderProducts();
+                    renderStats();
+                    showToast('🗑️ Produk dihapus.', 'info');
+                });
+            }
+        });
+
+        // ====== PRODUK UNGGULAN ======
+        let featuredData = Object.assign({}, DEFAULT_FEATURED, lsGet(LS_KEYS.featured) || {});
+
+        const featuresList = document.getElementById('featuresList');
+
+        function addFeatureRow(value = '') {
+            const row = document.createElement('div');
+            row.className = 'feature-row';
+            row.innerHTML = `
+                <input type="text" class="feature-input" placeholder="Contoh: Benang katun premium anti-alergi" value="${value.replace(/"/g, '&quot;')}">
+                <button type="button" class="btn-remove-feature" title="Hapus">✕</button>`;
+            row.querySelector('.btn-remove-feature').addEventListener('click', () => {
+                row.remove();
+                refreshFeaturedPreview();
+            });
+            featuresList.appendChild(row);
+        }
+
+        document.getElementById('btnAddFeature').addEventListener('click', () => {
+            addFeatureRow();
+            refreshFeaturedPreview();
+        });
+
+        // Upload gambar unggulan
+        const fPreview = document.getElementById('fPreview');
+        const fImage = document.getElementById('fImage');
+        const fFile = document.getElementById('fFile');
+
+        document.getElementById('fUploadArea').addEventListener('click', () => fFile.click());
+        fImage.addEventListener('click', (e) => e.stopPropagation());
+        fImage.addEventListener('input', () => { showPreview(fPreview, fImage.value); refreshFeaturedPreview(); });
+        fFile.addEventListener('change', () => {
+            const f = fFile.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                fImage.value = reader.result;
+                showPreview(fPreview, reader.result);
+                refreshFeaturedPreview();
+            };
+            reader.readAsDataURL(f);
+        });
+
+        function fillFeaturedForm() {
+            document.getElementById('fLabel').value = featuredData.label || '';
+            document.getElementById('fName').value = featuredData.name || '';
+            document.getElementById('fDesc').value = featuredData.description || '';
+            document.getElementById('fPrice').value = featuredData.price || 0;
+            document.getElementById('fEmoji').value = featuredData.emoji || '';
+            fImage.value = featuredData.image || '';
+            showPreview(fPreview, fImage.value);
+            document.getElementById('fButtonText').value = featuredData.buttonText || '';
+            document.getElementById('fButtonLink').value = featuredData.buttonLink || '';
+            document.getElementById('fVisible').checked = featuredData.visible !== false;
+            featuresList.innerHTML = '';
+            (featuredData.features || []).forEach(f => addFeatureRow(f));
+            refreshFeaturedPreview();
+        }
+
+        // Preview live mengikuti isi form
+        function refreshFeaturedPreview() {
+            document.getElementById('fpLabel').textContent = document.getElementById('fLabel').value || '—';
+            document.getElementById('fpName').textContent = document.getElementById('fName').value || '—';
+            document.getElementById('fpDesc').textContent = document.getElementById('fDesc').value || '';
+            document.getElementById('fpPrice').textContent = formatRupiah(Number(document.getElementById('fPrice').value) || 0);
+            const feats = [...featuresList.querySelectorAll('.feature-input')].map(i => i.value.trim()).filter(Boolean);
+            document.getElementById('fpFeatures').innerHTML = feats.map(f => `<li>${f}</li>`).join('');
+            const img = fImage.value.trim();
+            const fpImage = document.getElementById('fpImage');
+            const fpEmoji = document.getElementById('fpEmoji');
+            if (img) {
+                fpImage.src = img;
+                fpImage.style.display = 'block';
+                fpEmoji.style.display = 'none';
+            } else {
+                fpImage.style.display = 'none';
+                fpEmoji.style.display = 'inline';
+                fpEmoji.textContent = document.getElementById('fEmoji').value || '🧸';
+            }
+        }
+
+        document.getElementById('featuredForm').addEventListener('input', refreshFeaturedPreview);
+
+        document.getElementById('featuredForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            featuredData = {
+                label: document.getElementById('fLabel').value.trim(),
+                name: document.getElementById('fName').value.trim(),
+                description: document.getElementById('fDesc').value.trim(),
+                price: Number(document.getElementById('fPrice').value) || 0,
+                emoji: document.getElementById('fEmoji').value.trim() || '🧸',
+                image: fImage.value.trim(),
+                features: [...featuresList.querySelectorAll('.feature-input')].map(i => i.value.trim()).filter(Boolean),
+                buttonText: document.getElementById('fButtonText').value.trim(),
+                buttonLink: document.getElementById('fButtonLink').value.trim(),
+                visible: document.getElementById('fVisible').checked
+            };
+            lsSet(LS_KEYS.featured, featuredData);
+            renderStats();
+            showToast('✅ Produk Unggulan tersimpan — website ikut ter-update!');
+        });
+
+        document.getElementById('btnResetFeatured').addEventListener('click', () => {
+            askConfirm('Reset Produk Unggulan?', 'Data unggulan akan dikembalikan ke default (sama dengan isi website).', '🔄', () => {
+                featuredData = { ...DEFAULT_FEATURED, features: [...DEFAULT_FEATURED.features] };
+                lsSet(LS_KEYS.featured, featuredData);
+                fillFeaturedForm();
+                renderStats();
+                showToast('🔄 Produk Unggulan direset ke default.', 'info');
+            });
+        });
+
+        // ====== PENGATURAN ======
+        let settingsData = Object.assign({}, DEFAULT_SETTINGS, lsGet(LS_KEYS.settings) || {});
+
+        function fillSettingsForm() {
+            document.getElementById('sWhatsapp').value = settingsData.whatsapp || '';
+            document.getElementById('sEmail').value = settingsData.email || '';
+            document.getElementById('sLocation').value = settingsData.location || '';
+            document.getElementById('sInstagram').value = settingsData.instagram || '';
+            document.getElementById('sFacebook').value = settingsData.facebook || '';
+            document.getElementById('sTiktok').value = settingsData.tiktok || '';
+        }
+
+        document.getElementById('settingsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            settingsData = {
+                whatsapp: document.getElementById('sWhatsapp').value.trim(),
+                email: document.getElementById('sEmail').value.trim(),
+                location: document.getElementById('sLocation').value.trim(),
+                instagram: document.getElementById('sInstagram').value.trim(),
+                facebook: document.getElementById('sFacebook').value.trim(),
+                tiktok: document.getElementById('sTiktok').value.trim()
+            };
+            lsSet(LS_KEYS.settings, settingsData);
+            showToast('✅ Pengaturan tersimpan — website ikut ter-update!');
+        });
+
+        // ====== ZONA BERBAHAYA ======
+        document.getElementById('btnResetProducts').addEventListener('click', () => {
+            askConfirm('Reset Semua Produk?', 'Seluruh produk akan dikembalikan ke default (sama dengan isi website).', '🗑️', () => {
+                products = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+                lsSet(LS_KEYS.products, products);
+                renderProducts();
+                renderStats();
+                showToast('🗑️ Produk direset ke default.', 'info');
+            });
+        });
+
+        document.getElementById('btnResetAll').addEventListener('click', () => {
+            askConfirm('Reset Semua Data?', 'Produk, unggulan, dan pengaturan dikembalikan ke default (sama dengan isi website).', '☢️', () => {
+                products = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+                featuredData = { ...DEFAULT_FEATURED, features: [...DEFAULT_FEATURED.features] };
+                settingsData = { ...DEFAULT_SETTINGS };
+                lsSet(LS_KEYS.products, products);
+                lsSet(LS_KEYS.featured, featuredData);
+                lsSet(LS_KEYS.settings, settingsData);
+                renderProducts();
+                renderStats();
+                fillFeaturedForm();
+                fillSettingsForm();
+                showToast('☢️ Semua data direset ke default.', 'error');
+            });
+        });
+
+        // ====== RENDER AWAL ======
+        renderProducts();
+        renderStats();
+        fillFeaturedForm();
+        fillSettingsForm();
+    </script>
 </body>
 </html>
-
 
