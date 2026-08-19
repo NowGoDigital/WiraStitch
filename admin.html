@@ -1214,6 +1214,7 @@
                                     <option value="New">✨ New</option>
                                     <option value="Limited">💎 Limited Edition</option>
                                     <option value="Promo">🎉 Promo</option>
+                                    <option value="Favorit">❤️ Favorit</option>
                                     <option value="Custom">🎨 Custom Available</option>
                                 </select>
                             </div>
@@ -1517,11 +1518,11 @@
             if (!data) {
                 const defaults = {
                     whatsapp: '6281234567890',
-                    email: 'hello@wirastitch.com',
-                    instagram: 'https://instagram.com/wirastitch',
-                    facebook: 'https://facebook.com/wirastitch',
-                    tiktok: 'https://tiktok.com/@wirastitch',
-                    location: 'Indonesia'
+                    email: '',
+                    instagram: '',
+                    facebook: '',
+                    tiktok: '',
+                    location: ''
                 };
                 localStorage.setItem('wirastitch_settings', JSON.stringify(defaults));
                 return defaults;
