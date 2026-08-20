@@ -124,6 +124,59 @@
             transform: translateY(-2px);
         }
 
+                /* ====== LANGUAGE SWITCHER (ID / EN) ====== */
+        .lang-switch {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--cream-dark);
+            border: 1px solid rgba(139, 94, 60, 0.15);
+            border-radius: 999px;
+            padding: 3px;
+            flex-shrink: 0;
+        }
+
+        .lang-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: calc(50% - 3px);
+            height: calc(100% - 6px);
+            background: var(--white);
+            border-radius: 999px;
+            box-shadow: 0 2px 8px rgba(139, 94, 60, 0.25);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lang-switch[data-lang="en"] .lang-thumb {
+            transform: translateX(100%);
+        }
+
+        .lang-btn {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 999px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .lang-btn .lang-flag { font-size: 0.95rem; line-height: 1; }
+
+        .lang-btn.active { color: var(--primary-dark); }
+
+        .lang-btn:hover:not(.active) { color: var(--text-medium); }
+
         /* ====== NAVBAR ====== */
         .navbar {
             position: fixed;
@@ -1652,6 +1705,14 @@
                 display: none;
             }
 
+                        /* Switcher bahasa versi compact di HP */
+            .lang-btn {
+                padding: 5px 9px;
+                font-size: 0.66rem;
+            }
+
+            .lang-btn .lang-flag { font-size: 0.85rem; }
+                    
             .section-title h2 {
                 font-size: 2rem;
             }
@@ -2141,6 +2202,13 @@
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#testimoni">Testimoni</a></li>
                 <li><a href="#kontak">Kontak</a></li>
+                                <li>
+                    <div class="lang-switch" id="langSwitch" data-lang="id" title="Pilih bahasa / Choose language">
+                        <span class="lang-thumb"></span>
+                        <button type="button" class="lang-btn active" data-lang="id"><span class="lang-flag">🇮</span>ID</button>
+                        <button type="button" class="lang-btn" data-lang="en"><span class="lang-flag">🇬</span>EN</button>
+                    </div>
+                </li>
                 <li>
                     <div class="nav-cart" id="cartBtn">
                         🛒
@@ -3036,6 +3104,340 @@
             window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
         });
 
+                // ====== DUA BAHASA (INDONESIA / ENGLISH) ======
+        const I18N = {
+            id: {
+                navHome: 'Beranda', navCategory: 'Kategori', navProducts: 'Produk',
+                navAbout: 'Tentang', navTestimonial: 'Testimoni', navContact: 'Kontak',
+                bnHome: 'Beranda', bnCategory: 'Kategori', bnProducts: 'Produk', bnWorkshop: 'Workshop', bnContact: 'Kontak',
+                heroBadge: '✨ 100% Handmade dengan Cinta',
+                heroTitle1: 'Rajutan ', heroTitleSpan: 'Handmade', heroTitle2: ' untuk Momen Spesialmu',
+                heroDesc: 'WiraStitch menghadirkan produk rajutan berkualitas tinggi dari benang pilihan. Setiap jahitan dibuat dengan penuh ketelatenan oleh pengrajin berpengalaman.',
+                heroBtn1: 'Belanja Sekarang', heroBtn2: 'Cerita Kami',
+                stat1: 'Produk Terjual', stat2: 'Pelanggan Puas', stat3: 'Rating Toko',
+                float1a: 'Tas Rajut', float1b: 'Best Seller', float2a: 'Amigurumi', float2b: 'Custom Order',
+                catTitle: 'Kategori Produk',
+                catDesc: 'Jelajahi berbagai kategori rajutan handmade kami',
+                cat1t: 'Tas Rajut', cat1d: 'Elegan & Fungsional',
+                cat2t: 'Topi & Beanie', cat2d: 'Hangat & Stylish',
+                cat3t: 'Syal & Scarf', cat3d: 'Lembut & Nyaman',
+                cat4t: 'Boneka Amigurumi', cat4d: 'Lucu & Unik',
+                prodTitle: 'Produk Unggulan',
+                prodDesc: 'Koleksi rajutan terbaik yang paling diminati pelanggan kami',
+                filterAll: 'Semua', filterTas: 'Tas', filterTopi: 'Topi', filterSyal: 'Syal', filterBoneka: 'Boneka', filterAksesoris: 'Aksesoris',
+                aboutTitle: 'Tentang Kami',
+                aboutDesc: 'Cerita di balik setiap rajutan WiraStitch',
+                aboutH2a: 'Dibuat dengan Cinta,', aboutH2b: 'Dirajut dengan Telaten',
+                aboutP1: 'WiraStitch lahir dari kecintaan kami pada seni merajut sejak 2020. Setiap produk dikerjakan secara handmade oleh pengrajin lokal berpengalaman, bukan produksi massal.',
+                aboutP2: 'Kami hanya menggunakan benang katun dan wol premium yang telah melalui proses kurasi, sehingga setiap produk awet, lembut, dan nyaman digunakan bertahun-tahun.',
+                aboutP3: 'Dengan membeli WiraStitch, kamu turut mendukung karya pengrajin lokal Indonesia.',
+                processTitle: 'Proses Pembuatan',
+                processDesc: 'Empat tahap yang menjamin kualitas setiap produk kami',
+                proc1t: 'Pemilihan Benang', proc1d: 'Benang katun & wol premium melalui kurasi ketat.',
+                proc2t: 'Proses Merajut', proc2d: 'Dikerjakan handmade oleh pengrajin berpengalaman.',
+                proc3t: 'Quality Control', proc3d: 'Setiap jahitan dicek satu per satu sebelum dikemas.',
+                proc4t: 'Pengiriman', proc4d: 'Dikemas rapi dan aman sampai ke tanganmu.',
+                testTitle: 'Kata Pelanggan Kami',
+                testDesc: 'Ribuan pelanggan puas telah mempercayakan momen spesialnya pada WiraStitch',
+                test1: '"Tas rajutnya cantik banget, jahitannya rapi dan kuat. Dipakai harian buat ngantor tetap awet. Pasti repeat order!"',
+                test1n: 'Rina Marlina', test1r: 'Jakarta • Pembeli Tas Rajut',
+                test2: '"Pesan boneka amigurumi custom untuk kado wisuda pacar, hasilnya lucu banget! Packagingnya juga rapi dan ada kartu ucapan. Recommended!"',
+                test2n: 'Dimas Pratama', test2r: 'Bandung • Pembeli Amigurumi',
+                test3: '"Syalnya lembut dan warnanya persis seperti di foto. Pengiriman cepat, admin ramah. Terima kasih WiraStitch!"',
+                test3n: 'Sari Wulandari', test3r: 'Yogyakarta • Pembeli Syal',
+                ctaTitle: 'Siap Memiliki Rajutan Impianmu?',
+                ctaDesc: 'Dapatkan diskon 10% untuk pembelian pertama dengan kode <strong>WIRA10</strong>. Bisa custom desain sesuai keinginanmu!',
+                ctaBtn: 'Lihat Koleksi',
+                wsTitle: 'Workshop Merajut',
+                wsDesc: 'Belajar merajut langsung dari pengrajin WiraStitch — cocok untuk pemula!',
+                wsBadge: '🎉 Event Spesial Bulan Ini',
+                wsH2: 'Rajut Karya Pertamamu dalam 3 Jam!',
+                wsP: 'Belum pernah merajut? Tenang! Kamu akan dibimbing langkah demi langkah sampai punya karya sendiri untuk dibawa pulang. Semua alat & bahan kami sediakan.',
+                wsD1: 'Sabtu & Minggu, 10.00 – 13.00 WIB',
+                wsD2: 'Studio WiraStitch, Perampuan Labuapi',
+                wsD3: 'Rp150.000 / orang (all-in)',
+                wsD4: 'Maksimal 8 peserta per kelas',
+                wsPerk1: '✓ Alat & benang disediakan', wsPerk2: '✓ Bawa pulang hasil karya',
+                wsPerk3: '✓ Sertifikat', wsPerk4: '✓ Snack & minuman',
+                wsFormTitle: 'Formulir Pendaftaran',
+                wsFormDesc: 'Isi data di bawah — pendaftaran terkirim langsung ke WhatsApp kami.',
+                wsName: 'Nama Lengkap *', wsNamePh: 'Nama kamu',
+                wsPhone: 'No. WhatsApp *',
+                wsClass: 'Pilih Kelas *', wsClassPh: '-- Pilih kelas --',
+                wsClass1: 'Pemula (Basic Crochet)', wsClass2: 'Amigurumi (Boneka Rajut)', wsClass3: 'Tas Rajut',
+                wsDate: 'Pilih Jadwal *', wsDatePh: '-- Pilih jadwal --',
+                wsDate1: 'Sabtu, 10.00 WIB', wsDate2: 'Minggu, 10.00 WIB',
+                wsNote: 'Catatan (opsional)', wsNotePh: 'Contoh: daftar 2 orang, ada pertanyaan...',
+                wsSubmit: '💬 Daftar via WhatsApp',
+                wsQuota: '🔥 Slot terbatas — hanya 8 kursi per kelas!',
+                mapTitle: 'Lokasi Kami',
+                footerDesc: 'Produk rajutan handmade berkualitas tinggi dari benang pilihan. Dibuat dengan cinta dan ketelatenan oleh pengrajin lokal Indonesia.',
+                footerCopy: '© 2026 WiraStitch. Seluruh hak cipta dilindungi.',
+                cartTitle: 'Keranjang Belanja 🛒',
+                cartEmpty: 'Keranjang kamu masih kosong',
+                cartSubtotal: 'Subtotal', cartTotal: 'Total',
+                cartCheckout: 'Checkout via WhatsApp',
+                remove: 'Hapus',
+                waFloat: 'Chat WhatsApp', backTop: 'Kembali ke atas'
+            },
+            en: {
+                navHome: 'Home', navCategory: 'Categories', navProducts: 'Products',
+                navAbout: 'About', navTestimonial: 'Testimonials', navContact: 'Contact',
+                bnHome: 'Home', bnCategory: 'Categories', bnProducts: 'Products', bnWorkshop: 'Workshop', bnContact: 'Contact',
+                heroBadge: '✨ 100% Handmade with Love',
+                heroTitle1: 'Handmade ', heroTitleSpan: 'Knits', heroTitle2: ' for Your Special Moments',
+                heroDesc: 'WiraStitch brings you high-quality knitted products made from selected yarns. Every stitch is carefully crafted by experienced artisans.',
+                heroBtn1: 'Shop Now', heroBtn2: 'Our Story',
+                stat1: 'Products Sold', stat2: 'Happy Customers', stat3: 'Store Rating',
+                float1a: 'Knitted Bags', float1b: 'Best Seller', float2a: 'Amigurumi', float2b: 'Custom Order',
+                catTitle: 'Product Categories',
+                catDesc: 'Explore our handmade knit categories',
+                cat1t: 'Knitted Bags', cat1d: 'Elegant & Functional',
+                cat2t: 'Hats & Beanies', cat2d: 'Warm & Stylish',
+                cat3t: 'Scarves', cat3d: 'Soft & Cozy',
+                cat4t: 'Amigurumi Dolls', cat4d: 'Cute & Unique',
+                prodTitle: 'Featured Products',
+                prodDesc: 'Our finest knit collection, loved by our customers',
+                filterAll: 'All', filterTas: 'Bags', filterTopi: 'Hats', filterSyal: 'Scarves', filterBoneka: 'Dolls', filterAksesoris: 'Accessories',
+                aboutTitle: 'About Us',
+                aboutDesc: 'The story behind every WiraStitch knit',
+                aboutH2a: 'Made with Love,', aboutH2b: 'Knitted with Care',
+                aboutP1: 'WiraStitch was born from our love for the art of knitting since 2020. Every product is handmade by experienced local artisans — never mass-produced.',
+                aboutP2: 'We only use premium cotton and wool yarns that have passed a careful curation process, so every product stays durable, soft, and comfortable for years.',
+                aboutP3: 'By buying WiraStitch, you support the work of Indonesian local artisans.',
+                processTitle: 'Our Process',
+                processDesc: 'Four stages that guarantee the quality of every product',
+                proc1t: 'Yarn Selection', proc1d: 'Premium cotton & wool yarns, strictly curated.',
+                proc2t: 'Knitting', proc2d: 'Handmade by experienced artisans.',
+                proc3t: 'Quality Control', proc3d: 'Every stitch is checked one by one before packing.',
+                proc4t: 'Delivery', proc4d: 'Neatly and safely packed to your hands.',
+                testTitle: 'What Our Customers Say',
+                testDesc: 'Thousands of happy customers have trusted their special moments to WiraStitch',
+                test1: '"The knitted bag is gorgeous — neat and sturdy stitching. I use it daily for work and it still lasts. Definitely ordering again!"',
+                test1n: 'Rina Marlina', test1r: 'Jakarta • Knitted Bag Buyer',
+                test2: '"Ordered a custom amigurumi doll as a graduation gift for my girlfriend — it turned out so cute! The packaging was neat with a greeting card. Recommended!"',
+                test2n: 'Dimas Pratama', test2r: 'Bandung • Amigurumi Buyer',
+                test3: '"The scarf is soft and the colour is exactly like the photo. Fast delivery, friendly admin. Thank you, WiraStitch!"',
+                test3n: 'Sari Wulandari', test3r: 'Yogyakarta • Scarf Buyer',
+                ctaTitle: 'Ready to Own Your Dream Knit?',
+                ctaDesc: 'Get 10% off your first purchase with code <strong>WIRA10</strong>. Custom designs available upon request!',
+                ctaBtn: 'View Collection',
+                wsTitle: 'Knitting Workshop',
+                wsDesc: 'Learn to knit directly from WiraStitch artisans — perfect for beginners!',
+                wsBadge: '🎉 Special Event This Month',
+                wsH2: 'Knit Your First Piece in 3 Hours!',
+                wsP: 'Never knitted before? No worries! You will be guided step by step until you have your own piece to take home. All tools & materials are provided.',
+                wsD1: 'Saturday & Sunday, 10.00 – 13.00 (WIB)',
+                wsD2: 'WiraStitch Studio, Perampuan Labuapi',
+                wsD3: 'IDR 150,000 / person (all-in)',
+                wsD4: 'Maximum 8 participants per class',
+                wsPerk1: '✓ Tools & yarn provided', wsPerk2: '✓ Take your piece home',
+                wsPerk3: '✓ Certificate', wsPerk4: '✓ Snacks & drinks',
+                wsFormTitle: 'Registration Form',
+                wsFormDesc: 'Fill in the form below — your registration goes straight to our WhatsApp.',
+                wsName: 'Full Name *', wsNamePh: 'Your name',
+                wsPhone: 'WhatsApp Number *',
+                wsClass: 'Choose Class *', wsClassPh: '-- Choose a class --',
+                wsClass1: 'Beginner (Basic Crochet)', wsClass2: 'Amigurumi (Knitted Doll)', wsClass3: 'Knitted Bag',
+                wsDate: 'Choose Schedule *', wsDatePh: '-- Choose a schedule --',
+                wsDate1: 'Saturday, 10.00 (WIB)', wsDate2: 'Sunday, 10.00 (WIB)',
+                wsNote: 'Notes (optional)', wsNotePh: 'e.g. registering 2 people, have a question...',
+                wsSubmit: '💬 Register via WhatsApp',
+                wsQuota: '🔥 Limited slots — only 8 seats per class!',
+                mapTitle: 'Our Location',
+                footerDesc: 'High-quality handmade knitted products from selected yarns. Made with love and care by Indonesian local artisans.',
+                footerCopy: '© 2026 WiraStitch. All rights reserved.',
+                cartTitle: 'Shopping Cart 🛒',
+                cartEmpty: 'Your cart is still empty',
+                cartSubtotal: 'Subtotal', cartTotal: 'Total',
+                cartCheckout: 'Checkout via WhatsApp',
+                remove: 'Remove',
+                waFloat: 'Chat on WhatsApp', backTop: 'Back to top'
+            }
+        };
+
+        // Terjemahan dinamis (produk & Best Seller mengikuti data admin)
+        const DYNAMIC_I18N = {
+            id: {
+                catLabels: { tas: 'Tas Rajut', topi: 'Topi & Beanie', syal: 'Syal & Scarf', boneka: 'Boneka Amigurumi', aksesoris: 'Aksesoris' },
+                filterLabels: { tas: 'Tas', topi: 'Topi', syal: 'Syal', boneka: 'Boneka', aksesoris: 'Aksesoris' }
+            },
+            en: {
+                catLabels: { tas: 'Knitted Bags', topi: 'Hats & Beanies', syal: 'Scarves', boneka: 'Amigurumi Dolls', aksesoris: 'Accessories' },
+                filterLabels: { tas: 'Bags', topi: 'Hats', syal: 'Scarves', boneka: 'Dolls', aksesoris: 'Aksesoris' }
+            }
+        };
+
+        function applyLanguage(lang) {
+            const t = I18N[lang] || I18N.id;
+            const dyn = DYNAMIC_I18N[lang] || DYNAMIC_I18N.id;
+            const $ = s => document.querySelector(s);
+            const $$ = s => [...document.querySelectorAll(s)];
+
+            // Navbar
+            const navA = $$('.nav-links a');
+            ['navHome', 'navCategory', 'navProducts', 'navAbout', 'navTestimonial', 'navContact'].forEach((k, i) => {
+                if (navA[i]) navA[i].textContent = t[k];
+            });
+
+            // Bottom nav
+            const bnS = $$('.bottom-nav .bn-item span');
+            ['bnHome', 'bnCategory', 'bnProducts', 'bnWorkshop', 'bnContact'].forEach((k, i) => {
+                if (bnS[i]) bnS[i].textContent = t[k];
+            });
+
+            // Hero
+            $('.hero-badge').textContent = t.heroBadge;
+            const h1 = $('.hero-content h1');
+            h1.childNodes[0].nodeValue = t.heroTitle1;
+            h1.querySelector('span').textContent = t.heroTitleSpan;
+            h1.childNodes[2].nodeValue = t.heroTitle2;
+            $('.hero-content > p').textContent = t.heroDesc;
+            const heroBtns = $$('.hero-buttons .btn');
+            heroBtns[0].textContent = t.heroBtn1;
+            heroBtns[1].textContent = t.heroBtn2;
+            const stats = $$('.stat-item p');
+            stats[0].textContent = t.stat1; stats[1].textContent = t.stat2; stats[2].textContent = t.stat3;
+            const floats = $$('.floating-card');
+            if (floats[0]) { floats[0].querySelector('.card-text').textContent = t.float1a; floats[0].querySelector('.card-sub').textContent = t.float1b; }
+            if (floats[1]) { floats[1].querySelector('.card-text').textContent = t.float2a; floats[1].querySelector('.card-sub').textContent = t.float2b; }
+
+            // Section titles
+            const sec = $$('.section-title');
+            const secMap = [
+                ['catTitle', 'catDesc'], ['prodTitle', 'prodDesc'], ['aboutTitle', 'aboutDesc'],
+                ['processTitle', 'processDesc'], ['testTitle', 'testDesc'], ['wsTitle', 'wsDesc']
+            ];
+            sec.forEach((el, i) => {
+                if (!secMap[i]) return;
+                el.querySelector('h2').textContent = t[secMap[i][0]];
+                el.querySelector('p').textContent = t[secMap[i][1]];
+            });
+
+            // Kategori
+            const cats = $$('.category-card');
+            for (let i = 0; i < 4; i++) {
+                if (!cats[i]) continue;
+                cats[i].querySelector('h3').textContent = t['cat' + (i + 1) + 't'];
+                cats[i].querySelector('p').textContent = t['cat' + (i + 1) + 'd'];
+            }
+
+            // Filter produk (statis maupun hasil sinkronisasi admin)
+            $$('.filter-btn').forEach(b => {
+                const f = b.dataset.filter;
+                b.textContent = f === 'all' ? t.filterAll : (t['filter' + f.charAt(0).toUpperCase() + f.slice(1)] || dyn.filterLabels[f] || b.textContent);
+            });
+
+            // Label kategori pada kartu produk
+            $$('#productsGrid .product-card').forEach(card => {
+                const c = card.dataset.category;
+                const el = card.querySelector('.product-category');
+                if (el && dyn.catLabels[c]) el.textContent = dyn.catLabels[c];
+            });
+
+            // Tentang
+            const aboutH2 = $('.about-content h2');
+            aboutH2.childNodes[0].nodeValue = t.aboutH2a;
+            aboutH2.childNodes[2].nodeValue = t.aboutH2b;
+            const aboutPs = $$('.about-content > p');
+            aboutPs[0].textContent = t.aboutP1;
+            aboutPs[1].textContent = t.aboutP2;
+            aboutPs[2].textContent = t.aboutP3;
+
+            // Proses
+            const steps = $$('.process-step');
+            for (let i = 0; i < 4; i++) {
+                if (!steps[i]) continue;
+                steps[i].querySelector('h3').textContent = t['proc' + (i + 1) + 't'];
+                steps[i].querySelector('p').textContent = t['proc' + (i + 1) + 'd'];
+            }
+
+            // Testimoni
+            const tcards = $$('.testimonial-card');
+            for (let i = 0; i < 3; i++) {
+                if (!tcards[i]) continue;
+                tcards[i].querySelector('.testimonial-text').textContent = t['test' + (i + 1)];
+                tcards[i].querySelector('.testimonial-name').textContent = t['test' + i + 'n'];
+                tcards[i].querySelector('.testimonial-role').textContent = t['test' + i + 'r'];
+            }
+
+            // CTA
+            $('.cta h2').textContent = t.ctaTitle;
+            $('.cta p').innerHTML = t.ctaDesc;
+            $('.cta .btn').textContent = t.ctaBtn;
+
+            // Workshop
+            $('.workshop-badge').textContent = t.wsBadge;
+            $('.workshop-info h2').textContent = t.wsH2;
+            $('.workshop-info > p').textContent = t.wsP;
+            const wsD = $$('.workshop-details li');
+            wsD.forEach((li, i) => {
+                const icon = li.querySelector('.detail-icon');
+                li.innerHTML = '';
+                if (icon) li.appendChild(icon);
+                li.appendChild(document.createTextNode(' ' + t['wsD' + (i + 1)]));
+            });
+            const perks = $$('.workshop-perks li');
+            perks.forEach((li, i) => { li.textContent = t['wsPerk' + (i + 1)]; });
+            $('.workshop-form-side h3').textContent = t.wsFormTitle;
+            $('.workshop-form-side > p').textContent = t.wsFormDesc;
+            const wsLabels = $$('#workshopForm label');
+            ['wsName', 'wsPhone', 'wsClass', 'wsDate', 'wsNote'].forEach((k, i) => {
+                if (wsLabels[i]) wsLabels[i].textContent = t[k];
+            });
+            $('#wsName').placeholder = t.wsNamePh;
+            const classOpts = $$('#wsClass option');
+            classOpts[0].textContent = t.wsClassPh;
+            classOpts[1].textContent = t.wsClass1;
+            classOpts[2].textContent = t.wsClass2;
+            classOpts[3].textContent = t.wsClass3;
+            const dateOpts = $$('#wsDate option');
+            dateOpts[0].textContent = t.wsDatePh;
+            dateOpts[1].textContent = t.wsDate1;
+            dateOpts[2].textContent = t.wsDate2;
+            $('#wsNote').placeholder = t.wsNotePh;
+            $('#workshopForm .btn-workshop').textContent = t.wsSubmit;
+            $('.workshop-quota').textContent = t.wsQuota;
+
+            // Footer
+            $('.map-header-title').textContent = t.mapTitle;
+            $('.footer-brand > p').textContent = t.footerDesc;
+            $('.footer-bottom p').textContent = t.footerCopy;
+
+            // Keranjang
+            $('.cart-header h3').textContent = t.cartTitle;
+            const emptyP = $('.cart-empty p');
+            if (emptyP) emptyP.textContent = t.cartEmpty;
+            const totalRows = $$('.cart-total-row > span:first-child');
+            totalRows[0].textContent = t.cartSubtotal;
+            totalRows[1].textContent = t.cartTotal;
+            $('#cartCheckout').textContent = t.cartCheckout;
+            $$('.cart-item-remove').forEach(el => { el.textContent = t.remove; });
+
+            // Tombol melayang
+            $('.whatsapp-float').title = t.waFloat;
+            $('#backToTop').title = t.backTop;
+
+            // State tombol bahasa
+            const sw = $('#langSwitch');
+            sw.dataset.lang = lang;
+            $$('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+            document.documentElement.lang = lang;
+            window.CURRENT_LANG = lang;
+            try { localStorage.setItem('wirastitch_lang', lang); } catch (e) {}
+        }
+
+        // Klik tombol bahasa
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.addEventListener('click', () => applyLanguage(b.dataset.lang));
+        });
+
+        // Muat bahasa tersimpan (default: Indonesia)
+        applyLanguage((() => {
+            try { return localStorage.getItem('wirastitch_lang') || 'id'; } catch (e) { return 'id'; }
+        })());
+        
         // Render awal keranjang
         renderCart();
     </script>
