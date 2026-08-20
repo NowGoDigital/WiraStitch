@@ -1145,17 +1145,23 @@
 
         .modal-btn-cancel:hover { background: var(--cream-dark); }
 
-        /* ====== RESPONSIVE ====== */
+                /* ====== RESPONSIVE ====== */
         @media (max-width: 1024px) {
+            /* Sidebar berubah menjadi app-bar sticky di atas */
             .sidebar {
-                position: static;
+                position: sticky;
+                top: 0;
                 width: 100%;
-                padding: 18px 16px;
+                padding: 14px 12px 10px;
+                z-index: 250;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
             }
 
             .admin-shell { flex-direction: column; }
 
             .main-area { margin-left: 0; }
+
+            .admin-header { position: static; }
 
             .sidebar-brand {
                 border-bottom: none;
@@ -1165,84 +1171,232 @@
 
             .sidebar-label { display: none; }
 
+            /* Tab menjadi chip horizontal yang bisa digeser */
             .admin-tabs {
                 flex-direction: row;
                 overflow-x: auto;
-                padding-bottom: 6px;
                 gap: 8px;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
             }
+
+            .admin-tabs::-webkit-scrollbar { display: none; }
 
             .tab-btn {
                 width: auto;
+                flex: 0 0 auto;
                 white-space: nowrap;
                 padding: 11px 18px;
+                background: rgba(255, 255, 255, 0.06);
             }
 
-            .sidebar-footer {
-                margin-top: 14px;
-                padding-top: 14px;
-                flex-direction: row;
-            }
-
-            .sidebar-footer > * { flex: 1; text-align: center; }
+            .sidebar-footer { display: none; }
 
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            /* --- Bar atas compact: judul disembunyikan (brand sudah di sidebar) --- */
+            .admin-header {
+                padding: 10px 14px;
+                gap: 10px;
+            }
 
-            .form-row { grid-template-columns: 1fr; }
+            .admin-header-left h1 { display: none; }
 
-            .admin-header { padding: 14px 16px; }
+            .admin-badge {
+                font-size: 0.66rem;
+                padding: 5px 10px;
+            }
 
-            .admin-content { padding: 20px 14px 50px; }
+            .admin-header-right { gap: 8px; }
 
+            .btn-view-site,
+            .btn-logout {
+                padding: 8px 12px;
+                font-size: 0.74rem;
+                border-radius: 9px;
+            }
+
+            .admin-content { padding: 16px 12px 60px; }
+
+            /* --- Sidebar lebih compact --- */
+            .sidebar { padding: 12px 10px 8px; }
+
+            .sidebar-brand { margin-bottom: 10px; gap: 10px; }
+
+            .brand-tile {
+                width: 40px;
+                height: 40px;
+                font-size: 1.15rem;
+                border-radius: 12px;
+            }
+
+            .brand-text h1 { font-size: 1.05rem; }
+
+            .brand-text small { font-size: 0.6rem; letter-spacing: 1.5px; }
+
+            .tab-btn { padding: 10px 15px; font-size: 0.82rem; }
+
+            /* --- Statistik: 2 kolom compact --- */
+            .stats-grid { gap: 10px; margin-bottom: 20px; }
+
+            .stat-card {
+                padding: 14px;
+                gap: 12px;
+                border-radius: 16px;
+            }
+
+            .stat-card .stat-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1.2rem;
+                border-radius: 12px;
+            }
+
+            .stat-card .stat-value { font-size: 1.05rem; }
+
+            .stat-card .stat-label { font-size: 0.68rem; }
+
+            /* --- Form 1 kolom, tombol selebar penuh --- */
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+
+            .form-card,
+            .settings-card {
+                padding: 20px 16px;
+                border-radius: 16px;
+            }
+
+            .form-card h2 { font-size: 1.25rem; }
+
+            .btn-submit,
+            .btn-cancel {
+                width: 100%;
+                margin-left: 0;
+                padding: 14px;
+            }
+
+            .btn-cancel { margin-top: 10px; }
+
+            /* --- Header tabel ditumpuk rapi --- */
             .table-header {
                 flex-direction: column;
                 align-items: stretch;
+                padding: 16px;
             }
 
             .search-box { width: 100%; }
 
-            .product-table th,
-            .product-table td { padding: 10px 12px; }
+            #btnAddProduct { width: 100%; }
 
-            .action-btns { flex-direction: column; }
+            /* --- Tabel produk berubah menjadi kartu daftar --- */
+            .product-table thead { display: none; }
 
-            .login-card { padding: 35px 24px; }
+            .product-table,
+            .product-table tbody,
+            .product-table tr,
+            .product-table td {
+                display: block;
+                width: 100%;
+            }
 
+            .product-table tbody tr {
+                background: var(--white);
+                border: 1px solid var(--cream-dark);
+                border-radius: 16px;
+                margin: 12px;
+                padding: 14px;
+                box-shadow: var(--shadow);
+            }
+
+            .product-table td {
+                padding: 5px 0;
+                border-bottom: none;
+            }
+
+            .product-table td:nth-child(2),
+            .product-table td:nth-child(3),
+            .product-table td:nth-child(4) {
+                display: inline-block;
+                width: auto;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+
+            .action-btns {
+                flex-direction: row;
+                margin-top: 10px;
+            }
+
+            .action-btns button { flex: 1; }
+
+            /* --- Produk unggulan --- */
             .featured-preview-content {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
 
             .featured-preview-image {
-                width: 150px;
-                height: 150px;
+                width: 140px;
+                height: 140px;
                 margin: 0 auto;
             }
 
             .preview-features li { justify-content: center; }
 
             .feature-row {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row;
+                align-items: center;
             }
 
-            .btn-remove-feature { width: 100%; height: 36px; }
+            .btn-remove-feature {
+                width: 46px;
+                height: 46px;
+                flex-shrink: 0;
+            }
 
-            .form-card, .settings-card { padding: 22px 18px; }
+            /* --- Login & modal --- */
+            .login-card { padding: 32px 22px; }
+
+            .login-page::before,
+            .login-page::after { font-size: 6rem; }
+
+            .modal-box { padding: 30px 22px; }
+
+            .modal-btns { flex-direction: column-reverse; }
+
+            .modal-btns button { width: 100%; }
         }
 
         @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: 1fr; }
-
-            .stat-card { padding: 18px; }
-
-            .admin-header-left h1 { font-size: 1.05rem; }
-
             .admin-badge { display: none; }
+
+            .btn-view-site,
+            .btn-logout {
+                padding: 8px 10px;
+                font-size: 0.7rem;
+            }
+
+            /* Statistik tetap 2 kolom, lebih rapat */
+            .stats-grid { gap: 8px; }
+
+            .stat-card { padding: 12px; gap: 10px; }
+
+            .stat-card .stat-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1.05rem;
+            }
+
+            .stat-card .stat-value { font-size: 0.98rem; }
+
+            .stat-card .stat-label { font-size: 0.62rem; }
+
+            .product-table tbody tr {
+                margin: 10px 8px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
